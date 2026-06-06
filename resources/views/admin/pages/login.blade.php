@@ -25,6 +25,9 @@
 
     <div class="login-form-side">
         <div class="login-form-wrap">
+            <div style="margin-bottom:2rem;">
+                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:44px;width:auto;display:block;">
+            </div>
             <div class="login-form-header">
                 <h1>Welcome Back</h1>
                 <p>Sign in to the Keenkings Media admin panel</p>
