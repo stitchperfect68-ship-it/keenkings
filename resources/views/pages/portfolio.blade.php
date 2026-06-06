@@ -55,7 +55,7 @@
   font-size: 10px; background: var(--mid); color: var(--muted-dark);
   padding: 2px 7px; border-radius: 20px; transition: background .3s, color .3s; font-weight: 400;
 }
-.parent-tab.active .tab-count { background: rgba(200,169,110,.18); color: var(--accent); }
+.parent-tab.active .tab-count { background: rgba(137,221,223,.18); color: var(--accent); }
 
 .sub-filter-row {
   max-width: var(--max-wide); margin: 0 auto;
@@ -72,7 +72,7 @@
   background: transparent; cursor: pointer; white-space: nowrap;
   transition: border-color .2s, color .2s, background .2s;
 }
-.chip:hover { border-color: rgba(200,169,110,.4); color: var(--off-white); }
+.chip:hover { border-color: rgba(137,221,223,.4); color: var(--off-white); }
 .chip.active { border-color: var(--accent); color: var(--black); background: var(--accent); }
 
 .filter-summary {
@@ -106,7 +106,7 @@
   transition: border-color .3s;
 }
 .view-btn svg { opacity: .35; transition: opacity .3s; }
-.view-btn.active { border-color: rgba(200,169,110,.5); }
+.view-btn.active { border-color: rgba(137,221,223,.5); }
 .view-btn.active svg { opacity: 1; }
 
 .gallery-grid {
@@ -155,7 +155,7 @@
 }
 .badge-photo    { background: rgba(10,10,10,.55);  color: var(--off-white); }
 .badge-video    { background: rgba(20,40,80,.75);  color: #92b8f0; }
-.badge-graphics { background: rgba(50,25,5,.75);   color: #d4a96a; }
+.badge-graphics { background: rgba(50,25,5,.75);   color: #89dddf; }
 
 .play-btn {
   position: absolute; top: 50%; left: 50%;
@@ -192,7 +192,7 @@
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; z-index: 10; transition: border-color .3s, background .3s;
 }
-.lb-arrow:hover { border-color: var(--accent); background: rgba(200,169,110,.15); }
+.lb-arrow:hover { border-color: var(--accent); background: rgba(137,221,223,.15); }
 .lb-arrow--prev { left: -68px; }
 .lb-arrow--next { right: -68px; }
 

@@ -15,7 +15,7 @@
 <!-- Stats Row -->
 <div class="stats-row">
     <div class="stat-card">
-        <div class="stat-icon" style="--c: #C9A84C">
+        <div class="stat-icon" style="--c: #89dddf">
             <i data-feather="layers"></i>
         </div>
         <div>
