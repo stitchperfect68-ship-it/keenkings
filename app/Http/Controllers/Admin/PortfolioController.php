@@ -70,6 +70,7 @@ class PortfolioController extends Controller
             $data['image_url']  = Storage::url($path);
         }
 
+        $data['size']        = $data['size'] ?? '';
         $data['is_active']   = $request->boolean('is_active', true);
         $data['sort_order']  = $data['sort_order'] ?? PortfolioItem::max('sort_order') + 1;
 
@@ -110,6 +111,7 @@ class PortfolioController extends Controller
             $data['image_url']  = Storage::url($path);
         }
 
+        $data['size']      = $data['size'] ?? '';
         $data['is_active'] = $request->boolean('is_active');
 
         $portfolio->update($data);
