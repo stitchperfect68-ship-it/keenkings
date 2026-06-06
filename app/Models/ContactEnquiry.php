@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class ContactEnquiry extends Model
+{
+    protected $fillable = ['name','email','phone','service','message','status','read_at'];
+    protected $casts    = ['read_at' => 'datetime'];
+}
