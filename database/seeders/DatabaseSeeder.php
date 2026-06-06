@@ -116,5 +116,8 @@ class DatabaseSeeder extends Seeder
             ['parent_category' => 'graphics', 'sub_category' => 'brochure', 'title' => 'Corporate Layout',  'size' => 'tall',    'image_url' => 'https://i.ibb.co/C5ZP92ch/gd.jpg', 'sort_order' => 27],
         ];
         foreach ($items as $item) PortfolioItem::create($item + ['is_active' => true]);
+
+        // ── Clients ──
+        $this->call(ClientSeeder::class);
     }
 }
