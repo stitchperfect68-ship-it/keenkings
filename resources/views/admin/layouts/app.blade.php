@@ -19,7 +19,7 @@
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-                <span class="logo-king">KEEN</span><span class="logo-accent">KINGS</span>
+                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:28px;width:auto;display:block;">
                 <small>ADMIN</small>
             </a>
             <button class="sidebar-collapse" id="sidebarCollapse"><i data-feather="chevrons-left"></i></button>

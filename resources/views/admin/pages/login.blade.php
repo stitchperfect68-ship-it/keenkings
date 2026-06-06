@@ -17,8 +17,7 @@
         <div class="login-visual-overlay"></div>
         <div class="login-visual-content">
             <div class="login-logo">
-                <span class="logo-king">KEEN</span><span class="logo-accent">KINGS</span>
-                <small>MEDIA</small>
+                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:52px;width:auto;display:block;margin-bottom:1rem;">
             </div>
             <p class="login-tagline">Admin Panel<br><em>Manage Your Story</em></p>
         </div>

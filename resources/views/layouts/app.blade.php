@@ -30,7 +30,9 @@
 
 <!-- ─── NAV ─── -->
 <nav id="nav">
-  <a href="{{ route('home') }}" class="nav-logo">Keen<span>kings</span></a>
+  <a href="{{ route('home') }}" class="nav-logo">
+    <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:38px;width:auto;display:block;">
+  </a>
   <ul class="nav-links">
     <li><a href="{{ route('home') }}#about">About</a></li>
     <li><a href="{{ route('portfolio') }}"{{ request()->routeIs('portfolio') ? ' class="active"' : '' }}>Portfolio</a></li>
@@ -47,7 +49,9 @@
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
-      <a href="{{ route('home') }}" class="nav-logo">Keen<span>kings</span></a>
+      <a href="{{ route('home') }}" class="nav-logo">
+        <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:40px;width:auto;display:block;">
+      </a>
       <p>Dynamic media production studio based in Lusaka. Specializing in storytelling, digital content creation, and brand development since 2016.</p>
       <div class="social-links">
         <a href="#" class="social-link">ig</a>
