@@ -70,11 +70,6 @@
                     Sign In <i data-feather="arrow-right"></i>
                 </button>
             </form>
-
-            <div class="login-hint">
-                <i data-feather="info"></i>
-                Default: <code>admin@keenkingsmedia.com</code> / <code>keenkings2016</code>
-            </div>
         </div>
     </div>
 </div>
