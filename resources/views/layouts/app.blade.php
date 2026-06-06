@@ -14,10 +14,6 @@
 </head>
 <body>
 
-<!-- Cursor -->
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
 <!-- Lightbox -->
 @hasSection('lightbox')
   @yield('lightbox')

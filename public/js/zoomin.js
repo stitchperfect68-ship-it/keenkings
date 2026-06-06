@@ -6,27 +6,6 @@
 (function () {
   'use strict';
 
-  /* ─── CUSTOM CURSOR ─── */
-  var cursor = document.getElementById('cursor');
-  var ring   = document.getElementById('cursor-ring');
-  var mx = 0, my = 0, rx = 0, ry = 0;
-
-  if (cursor && ring) {
-    document.addEventListener('mousemove', function (e) {
-      mx = e.clientX;
-      my = e.clientY;
-      cursor.style.left = mx + 'px';
-      cursor.style.top  = my + 'px';
-    });
-    (function lerpRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx + 'px';
-      ring.style.top  = ry + 'px';
-      requestAnimationFrame(lerpRing);
-    })();
-  }
-
   /* ─── STICKY NAV + MOBILE TOGGLE ─── */
   var nav = document.getElementById('nav');
   var hamburger = document.querySelector('.nav-hamburger');
