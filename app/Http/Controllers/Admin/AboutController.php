@@ -36,18 +36,20 @@ class AboutController extends Controller
 
         $about = AboutContent::getSingleton();
 
+        $disk = config('filesystems.media_disk');
+
         if ($request->hasFile('main_image_file')) {
-            if ($about->main_image_path) Storage::disk('public')->delete($about->main_image_path);
-            $path = $request->file('main_image_file')->store('about', 'public');
+            if ($about->main_image_path) Storage::disk($disk)->delete($about->main_image_path);
+            $path = $request->file('main_image_file')->store('about', $disk);
             $data['main_image_path'] = $path;
-            $data['main_image_url']  = Storage::url($path);
+            $data['main_image_url']  = Storage::disk($disk)->url($path);
         }
 
         if ($request->hasFile('accent_image_file')) {
-            if ($about->accent_image_path) Storage::disk('public')->delete($about->accent_image_path);
-            $path = $request->file('accent_image_file')->store('about', 'public');
+            if ($about->accent_image_path) Storage::disk($disk)->delete($about->accent_image_path);
+            $path = $request->file('accent_image_file')->store('about', $disk);
             $data['accent_image_path'] = $path;
-            $data['accent_image_url']  = Storage::url($path);
+            $data['accent_image_url']  = Storage::disk($disk)->url($path);
         }
 
         // Remove file fields from data before update

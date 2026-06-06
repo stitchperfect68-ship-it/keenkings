@@ -65,9 +65,10 @@ class PortfolioController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('portfolio', 'public');
+            $disk = config('filesystems.media_disk');
+            $path = $request->file('image_file')->store('portfolio', $disk);
             $data['image_path'] = $path;
-            $data['image_url']  = Storage::url($path);
+            $data['image_url']  = Storage::disk($disk)->url($path);
         }
 
         $data['size']        = $data['size'] ?? '';
@@ -105,10 +106,11 @@ class PortfolioController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            if ($portfolio->image_path) Storage::disk('public')->delete($portfolio->image_path);
-            $path = $request->file('image_file')->store('portfolio', 'public');
+            $disk = config('filesystems.media_disk');
+            if ($portfolio->image_path) Storage::disk($disk)->delete($portfolio->image_path);
+            $path = $request->file('image_file')->store('portfolio', $disk);
             $data['image_path'] = $path;
-            $data['image_url']  = Storage::url($path);
+            $data['image_url']  = Storage::disk($disk)->url($path);
         }
 
         $data['size']      = $data['size'] ?? '';
@@ -122,7 +124,7 @@ class PortfolioController extends Controller
 
     public function destroy(PortfolioItem $portfolio)
     {
-        if ($portfolio->image_path) Storage::disk('public')->delete($portfolio->image_path);
+        if ($portfolio->image_path) Storage::disk(config('filesystems.media_disk'))->delete($portfolio->image_path);
         $title = $portfolio->title;
         $portfolio->delete();
         return redirect()->route('admin.portfolio.index')
@@ -140,7 +142,7 @@ class PortfolioController extends Controller
         $ids = $request->validate(['ids' => 'required|array', 'ids.*' => 'integer'])['ids'];
         $items = PortfolioItem::whereIn('id', $ids)->get();
         foreach ($items as $item) {
-            if ($item->image_path) Storage::disk('public')->delete($item->image_path);
+            if ($item->image_path) Storage::disk(config('filesystems.media_disk'))->delete($item->image_path);
             $item->delete();
         }
         return back()->with('success', count($ids) . ' items deleted.');

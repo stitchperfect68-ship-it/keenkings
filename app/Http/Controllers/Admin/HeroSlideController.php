@@ -32,9 +32,10 @@ class HeroSlideController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            $path = $request->file('image_file')->store('hero', 'public');
+            $disk = config('filesystems.media_disk');
+            $path = $request->file('image_file')->store('hero', $disk);
             $data['image_path'] = $path;
-            $data['image_url']  = Storage::url($path);
+            $data['image_url']  = Storage::disk($disk)->url($path);
         }
 
         $data['is_active']  = $request->boolean('is_active', true);
@@ -61,10 +62,11 @@ class HeroSlideController extends Controller
         ]);
 
         if ($request->hasFile('image_file')) {
-            if ($hero->image_path) Storage::disk('public')->delete($hero->image_path);
-            $path = $request->file('image_file')->store('hero', 'public');
+            $disk = config('filesystems.media_disk');
+            if ($hero->image_path) Storage::disk($disk)->delete($hero->image_path);
+            $path = $request->file('image_file')->store('hero', $disk);
             $data['image_path'] = $path;
-            $data['image_url']  = Storage::url($path);
+            $data['image_url']  = Storage::disk($disk)->url($path);
         }
 
         $data['is_active'] = $request->boolean('is_active');
@@ -74,7 +76,7 @@ class HeroSlideController extends Controller
 
     public function destroy(HeroSlide $hero)
     {
-        if ($hero->image_path) Storage::disk('public')->delete($hero->image_path);
+        if ($hero->image_path) Storage::disk(config('filesystems.media_disk'))->delete($hero->image_path);
         $hero->delete();
         return redirect()->route('admin.hero.index')->with('success', 'Slide deleted.');
     }
