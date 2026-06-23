@@ -8,6 +8,8 @@ class SiteSetting extends Model
 {
     protected $fillable = [
         'font_preset',
+        'heading_font',
+        'body_font',
         'custom_serif_name',
         'custom_serif_path',
         'custom_sans_name',
@@ -16,47 +18,88 @@ class SiteSetting extends Model
 
     public static function current(): self
     {
-        return static::first() ?? static::create(['font_preset' => 'keenkings']);
+        return static::first() ?? static::create([
+            'font_preset'  => 'google',
+            'heading_font' => 'Cormorant Garamond',
+            'body_font'    => 'Jost',
+        ]);
     }
 
-    public static function fontPresets(): array
+    public static function headingFonts(): array
     {
         return [
-            'keenkings' => [
-                'label'       => 'Keenkings Default',
-                'description' => 'Cormorant Garamond + Jost',
-                'serif'       => 'Cormorant Garamond',
-                'sans'        => 'Jost',
-                'google_url'  => 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap',
+            'Serif' => [
+                'Cormorant Garamond',
+                'Playfair Display',
+                'Lora',
+                'Merriweather',
+                'EB Garamond',
+                'Libre Baskerville',
+                'Crimson Text',
+                'Spectral',
+                'Fraunces',
+                'Zilla Slab',
             ],
-            'editorial' => [
-                'label'       => 'Editorial',
-                'description' => 'Playfair Display + Inter',
-                'serif'       => 'Playfair Display',
-                'sans'        => 'Inter',
-                'google_url'  => 'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@300;400;500&display=swap',
+            'Display' => [
+                'DM Serif Display',
+                'Bodoni Moda',
+                'Cinzel',
+                'Josefin Slab',
+                'Rufina',
+                'Abril Fatface',
+                'Yeseva One',
+                'Italiana',
             ],
-            'modern' => [
-                'label'       => 'Modern',
-                'description' => 'DM Serif Display + DM Sans',
-                'serif'       => 'DM Serif Display',
-                'sans'        => 'DM Sans',
-                'google_url'  => 'https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap',
-            ],
-            'luxe' => [
-                'label'       => 'Luxe',
-                'description' => 'Libre Baskerville + Raleway',
-                'serif'       => 'Libre Baskerville',
-                'sans'        => 'Raleway',
-                'google_url'  => 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500&display=swap',
-            ],
-            'custom' => [
-                'label'       => 'Custom (Upload)',
-                'description' => 'Upload your own font files',
-                'serif'       => null,
-                'sans'        => null,
-                'google_url'  => null,
+            'Modern Sans' => [
+                'Raleway',
+                'Oswald',
+                'Montserrat',
+                'Bebas Neue',
+                'Archivo',
+                'Barlow Condensed',
             ],
         ];
+    }
+
+    public static function bodyFonts(): array
+    {
+        return [
+            'Geometric Sans' => [
+                'Jost',
+                'DM Sans',
+                'Poppins',
+                'Outfit',
+                'Urbanist',
+                'Lexend',
+                'Figtree',
+                'Nunito',
+            ],
+            'Humanist Sans' => [
+                'Inter',
+                'Lato',
+                'Open Sans',
+                'Work Sans',
+                'Barlow',
+                'Mulish',
+                'Karla',
+                'Manrope',
+                'Plus Jakarta Sans',
+                'Source Sans 3',
+            ],
+            'Transitional' => [
+                'Raleway',
+                'Montserrat',
+                'Josefin Sans',
+                'Quicksand',
+            ],
+        ];
+    }
+
+    public static function googleFontsUrl(string $headingFont, string $bodyFont): string
+    {
+        $encode = fn($f) => str_replace(' ', '+', $f);
+        $h = $encode($headingFont);
+        $b = $encode($bodyFont);
+        return "https://fonts.googleapis.com/css2?family={$h}:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family={$b}:wght@300;400;500&display=swap";
     }
 }

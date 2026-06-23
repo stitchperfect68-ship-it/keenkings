@@ -7,17 +7,15 @@
 <title>@yield('title', 'Keenkings — Photography Portfolio')</title>
 <meta name="description" content="@yield('description', 'Keenkings Media is a dynamic media production studio based in Lusaka, Zambia. Est. 2016.')">
 @php
-    $fontPresets = \App\Models\SiteSetting::fontPresets();
     try {
-        $siteSetting  = \App\Models\SiteSetting::current();
-        $activePreset = $siteSetting->font_preset ?? 'keenkings';
+        $siteSetting = \App\Models\SiteSetting::current();
     } catch (\Exception $e) {
-        $siteSetting  = null;
-        $activePreset = 'keenkings';
+        $siteSetting = null;
     }
-    // Build any CSS that overrides the font variables
-    $fontCss = '';
-    if ($activePreset === 'custom' && $siteSetting) {
+    $fontCss      = '';
+    $googleFontsUrl = null;
+
+    if ($siteSetting && $siteSetting->font_preset === 'custom') {
         $serifName = $siteSetting->custom_serif_name ?: 'CustomSerif';
         $sansName  = $siteSetting->custom_sans_name  ?: 'CustomSans';
         if ($siteSetting->custom_serif_path) {
@@ -27,15 +25,19 @@
             $fontCss .= "@font-face{font-family:'{$sansName}';src:url('" . asset('storage/' . $siteSetting->custom_sans_path) . "');font-display:swap;}";
         }
         $fontCss .= ":root{--font-serif:'{$serifName}',serif;--font-sans:'{$sansName}',sans-serif;}";
-    } elseif ($activePreset !== 'keenkings' && isset($fontPresets[$activePreset])) {
-        $p = $fontPresets[$activePreset];
-        $fontCss = ":root{--font-serif:'{$p['serif']}',serif;--font-sans:'{$p['sans']}',sans-serif;}";
+    } else {
+        $headingFont = $siteSetting->heading_font ?? 'Cormorant Garamond';
+        $bodyFont    = $siteSetting->body_font    ?? 'Jost';
+        $googleFontsUrl = \App\Models\SiteSetting::googleFontsUrl($headingFont, $bodyFont);
+        if ($headingFont !== 'Cormorant Garamond' || $bodyFont !== 'Jost') {
+            $fontCss = ":root{--font-serif:'{$headingFont}',serif;--font-sans:'{$bodyFont}',sans-serif;}";
+        }
     }
 @endphp
-@if($activePreset !== 'custom' && isset($fontPresets[$activePreset]['google_url']))
+@if($googleFontsUrl)
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="{{ $fontPresets[$activePreset]['google_url'] }}" rel="stylesheet"/>
+<link href="{{ $googleFontsUrl }}" rel="stylesheet"/>
 @endif
 @if($fontCss)
 <style>{!! $fontCss !!}</style>

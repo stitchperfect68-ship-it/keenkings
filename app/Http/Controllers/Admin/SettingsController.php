@@ -11,17 +11,21 @@ class SettingsController extends Controller
 {
     public function index()
     {
-        $settings = SiteSetting::current();
-        $presets  = SiteSetting::fontPresets();
-        return view('admin.pages.settings', compact('settings', 'presets'));
+        $settings      = SiteSetting::current();
+        $headingFonts  = SiteSetting::headingFonts();
+        $bodyFonts     = SiteSetting::bodyFonts();
+        return view('admin.pages.settings', compact('settings', 'headingFonts', 'bodyFonts'));
     }
 
     public function update(Request $request)
     {
-        $validPresets = implode(',', array_keys(SiteSetting::fontPresets()));
+        $allHeading = collect(SiteSetting::headingFonts())->flatten()->toArray();
+        $allBody    = collect(SiteSetting::bodyFonts())->flatten()->toArray();
 
         $request->validate([
-            'font_preset'       => 'required|in:' . $validPresets,
+            'font_preset'       => 'required|in:google,custom',
+            'heading_font'      => 'required_if:font_preset,google|nullable|in:' . implode(',', $allHeading),
+            'body_font'         => 'required_if:font_preset,google|nullable|in:' . implode(',', $allBody),
             'custom_serif_name' => 'nullable|string|max:100',
             'custom_sans_name'  => 'nullable|string|max:100',
             'custom_serif_file' => 'nullable|file|mimes:woff2,woff,ttf,otf|max:5120',
@@ -29,24 +33,27 @@ class SettingsController extends Controller
         ]);
 
         $settings = SiteSetting::current();
-        $data = ['font_preset' => $request->font_preset];
 
         if ($request->font_preset === 'custom') {
-            $data['custom_serif_name'] = $request->custom_serif_name;
-            $data['custom_sans_name']  = $request->custom_sans_name;
-
+            $data = [
+                'font_preset'       => 'custom',
+                'custom_serif_name' => $request->custom_serif_name,
+                'custom_sans_name'  => $request->custom_sans_name,
+            ];
             if ($request->hasFile('custom_serif_file')) {
-                if ($settings->custom_serif_path) {
-                    Storage::disk('public')->delete($settings->custom_serif_path);
-                }
+                if ($settings->custom_serif_path) Storage::disk('public')->delete($settings->custom_serif_path);
                 $data['custom_serif_path'] = $request->file('custom_serif_file')->store('fonts', 'public');
             }
             if ($request->hasFile('custom_sans_file')) {
-                if ($settings->custom_sans_path) {
-                    Storage::disk('public')->delete($settings->custom_sans_path);
-                }
+                if ($settings->custom_sans_path) Storage::disk('public')->delete($settings->custom_sans_path);
                 $data['custom_sans_path'] = $request->file('custom_sans_file')->store('fonts', 'public');
             }
+        } else {
+            $data = [
+                'font_preset'  => 'google',
+                'heading_font' => $request->heading_font,
+                'body_font'    => $request->body_font,
+            ];
         }
 
         $settings->update($data);
