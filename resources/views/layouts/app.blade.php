@@ -6,9 +6,40 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <title>@yield('title', 'Keenkings — Photography Portfolio')</title>
 <meta name="description" content="@yield('description', 'Keenkings Media is a dynamic media production studio based in Lusaka, Zambia. Est. 2016.')">
+@php
+    $fontPresets = \App\Models\SiteSetting::fontPresets();
+    try {
+        $siteSetting  = \App\Models\SiteSetting::current();
+        $activePreset = $siteSetting->font_preset ?? 'keenkings';
+    } catch (\Exception $e) {
+        $siteSetting  = null;
+        $activePreset = 'keenkings';
+    }
+    // Build any CSS that overrides the font variables
+    $fontCss = '';
+    if ($activePreset === 'custom' && $siteSetting) {
+        $serifName = $siteSetting->custom_serif_name ?: 'CustomSerif';
+        $sansName  = $siteSetting->custom_sans_name  ?: 'CustomSans';
+        if ($siteSetting->custom_serif_path) {
+            $fontCss .= "@font-face{font-family:'{$serifName}';src:url('" . asset('storage/' . $siteSetting->custom_serif_path) . "');font-display:swap;}";
+        }
+        if ($siteSetting->custom_sans_path) {
+            $fontCss .= "@font-face{font-family:'{$sansName}';src:url('" . asset('storage/' . $siteSetting->custom_sans_path) . "');font-display:swap;}";
+        }
+        $fontCss .= ":root{--font-serif:'{$serifName}',serif;--font-sans:'{$sansName}',sans-serif;}";
+    } elseif ($activePreset !== 'keenkings' && isset($fontPresets[$activePreset])) {
+        $p = $fontPresets[$activePreset];
+        $fontCss = ":root{--font-serif:'{$p['serif']}',serif;--font-sans:'{$p['sans']}',sans-serif;}";
+    }
+@endphp
+@if($activePreset !== 'custom' && isset($fontPresets[$activePreset]['google_url']))
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="{{ $fontPresets[$activePreset]['google_url'] }}" rel="stylesheet"/>
+@endif
+@if($fontCss)
+<style>{!! $fontCss !!}</style>
+@endif
 <link rel="stylesheet" href="{{ asset('css/zoomin.css') }}"/>
 @stack('head')
 </head>

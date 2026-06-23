@@ -60,5 +60,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Enquiries
         Route::resource('enquiries', Admin\EnquiriesController::class)->only(['index','show','destroy']);
         Route::patch('enquiries/{enquiry}/status', [Admin\EnquiriesController::class, 'updateStatus'])->name('enquiries.status');
+
+        // Settings
+        Route::get('settings',  [Admin\SettingsController::class, 'index'])->name('settings.index');
+        Route::put('settings',  [Admin\SettingsController::class, 'update'])->name('settings.update');
     });
 });
