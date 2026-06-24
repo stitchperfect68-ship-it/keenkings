@@ -610,7 +610,14 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
   opacity: 0; pointer-events: none; transition: opacity .4s;
 }
 .lightbox.open { opacity: 1; pointer-events: all; }
-.lightbox img  { max-width: 90vw; max-height: 85vh; object-fit: contain; }
+#lightbox-media { display:flex; align-items:center; justify-content:center; width:100%; }
+.lightbox img   { max-width: 90vw; max-height: 85vh; object-fit: contain; display:block; }
+.lightbox iframe {
+  width: min(960px, 90vw);
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+}
 .lightbox-close {
   position: absolute; top: 32px; right: 40px;
   font-size: 28px; color: var(--muted-dark); cursor: pointer;

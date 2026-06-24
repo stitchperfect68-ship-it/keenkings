@@ -53,7 +53,7 @@
 @else
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img id="lightbox-img" src="" alt=""/>
+  <div id="lightbox-media"></div>
 </div>
 @endif
 

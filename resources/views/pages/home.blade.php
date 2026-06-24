@@ -120,6 +120,7 @@
       @foreach($previewItems as $item)
       <div class="portfolio-item {{ $item['sz'] }} reveal"
            data-cat="{{ $item['p'] }}"
+           data-video="{{ $item['vid'] }}"
            onclick="openLightbox(this)">
         <img src="{{ $item['img'] }}" alt="{{ $item['t'] }}" loading="lazy"/>
         <div class="portfolio-item-overlay">
