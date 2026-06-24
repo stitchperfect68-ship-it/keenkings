@@ -8,7 +8,7 @@
 /* ── Hero Recent Activity Strip ── */
 .hero-activity {
   position: absolute;
-  bottom: 110px;
+  bottom: 24px;
   left: clamp(20px, 5vw, 80px);
   z-index: 50;
   display: flex;
@@ -111,11 +111,13 @@
   flex-shrink: 0;
   margin: 0 3px;
 }
-/* Mobile — show stacked vertically */
+/* Mobile — push hero content to top, strip stays at bottom */
 @media (max-width: 600px) {
+  .hero { align-items: flex-start !important; }
+  .hero-content { padding: 84px 20px 20px !important; }
   .hero-activity {
     display: flex;
-    bottom: 80px;
+    bottom: 24px;
     left: 16px;
     right: 16px;
   }
@@ -123,17 +125,13 @@
     flex-direction: column;
     align-items: stretch;
   }
-  .hero-activity-item {
-    max-width: 100%;
-  }
+  .hero-activity-item { max-width: 100%; }
   .hero-activity-div {
     width: auto;
     height: 1px;
     margin: 3px 8px;
   }
-  .hero-activity-name {
-    max-width: none;
-  }
+  .hero-activity-name { max-width: none; }
 }
 </style>
 @endpush
