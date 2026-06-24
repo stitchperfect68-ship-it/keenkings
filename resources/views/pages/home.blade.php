@@ -3,6 +3,118 @@
 @section('title', 'Keenkings — Photography Portfolio')
 @section('description', 'Keenkings Media is a dynamic media production company specializing in storytelling, digital content creation, and brand development. Based in Lusaka, Zambia. Est. 2016.')
 
+@push('head')
+<style>
+/* ── Hero Recent Activity Strip ── */
+.hero-activity {
+  position: absolute;
+  bottom: 110px;
+  left: clamp(20px, 5vw, 80px);
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.hero-activity-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  font-size: 9px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.35);
+  font-family: var(--font-sans);
+  font-weight: 400;
+}
+.hero-activity-pulse {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent, #89dddf);
+  flex-shrink: 0;
+  animation: ha-pulse 2.6s ease-in-out infinite;
+}
+@keyframes ha-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .22; }
+}
+.hero-activity-rail {
+  display: flex;
+  align-items: center;
+  background: rgba(8, 8, 8, .62);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 13px;
+  padding: 3px;
+}
+.hero-activity-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 15px 9px 9px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  max-width: 230px;
+  transition: background .22s;
+}
+.hero-activity-item:hover { background: rgba(255,255,255,.05); }
+.hero-activity-thumb {
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(255,255,255,.09);
+}
+.hero-activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.45);
+}
+.hero-activity-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.hero-activity-cat {
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent, #89dddf);
+  opacity: .75;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+.hero-activity-name {
+  font-size: 12px;
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: rgba(255,255,255,.82);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+  letter-spacing: .01em;
+}
+.hero-activity-div {
+  width: 1px;
+  height: 34px;
+  background: rgba(255,255,255,.08);
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+@media (max-width: 600px) { .hero-activity { display: none; } }
+</style>
+@endpush
+
 @section('content')
 
 <!-- ═══════════════════════════════════════════
@@ -20,6 +132,44 @@
       <a href="#about" class="btn-ghost">{{ $pageSettings->hero_cta_secondary }}</a>
     </div>
   </div>
+
+  {{-- ── Recent Activity Strip ── --}}
+  @if($latestPortfolio || $latestBlog)
+  <div class="hero-activity">
+    <p class="hero-activity-label">
+      <span class="hero-activity-pulse"></span>
+      Recently Added
+    </p>
+    <div class="hero-activity-rail">
+      @if($latestPortfolio)
+      <a href="{{ route('portfolio') }}" class="hero-activity-item">
+        <img src="{{ $latestPortfolio->imageUrl() }}" alt="{{ $latestPortfolio->title }}" class="hero-activity-thumb" loading="lazy">
+        <div class="hero-activity-meta">
+          <span class="hero-activity-cat">{{ ucfirst($latestPortfolio->parent_category) }}</span>
+          <span class="hero-activity-name">{{ \Illuminate\Support\Str::limit($latestPortfolio->title, 22) }}</span>
+        </div>
+      </a>
+      @endif
+      @if($latestPortfolio && $latestBlog)
+      <div class="hero-activity-div"></div>
+      @endif
+      @if($latestBlog)
+      <a href="{{ route('blog.show', $latestBlog->slug) }}" class="hero-activity-item">
+        @if($latestBlog->featured_image_url)
+        <img src="{{ $latestBlog->featured_image_url }}" alt="{{ $latestBlog->title }}" class="hero-activity-thumb" loading="lazy">
+        @else
+        <div class="hero-activity-thumb hero-activity-icon">✍</div>
+        @endif
+        <div class="hero-activity-meta">
+          <span class="hero-activity-cat">Blog{{ $latestBlog->category ? ' · ' . $latestBlog->category : '' }}</span>
+          <span class="hero-activity-name">{{ \Illuminate\Support\Str::limit($latestBlog->title, 22) }}</span>
+        </div>
+      </a>
+      @endif
+    </div>
+  </div>
+  @endif
+
   <div class="hero-scroll">
     <div class="scroll-line"></div>
     <span>Scroll</span>

@@ -12,6 +12,7 @@ use App\Models\Client;
 use App\Models\PageSetting;
 use App\Models\ProcessStep;
 use App\Models\SocialLink;
+use App\Models\BlogPost;
 
 class HomeController extends Controller
 {
@@ -101,7 +102,10 @@ class HomeController extends Controller
             $socialLinks = collect();
         }
 
-        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks'));
+        $latestPortfolio = PortfolioItem::where('is_active', true)->latest()->first();
+        $latestBlog      = BlogPost::where('is_published', true)->latest('published_at')->first();
+
+        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks', 'latestPortfolio', 'latestBlog'));
     }
 
     public function about()   { return view('pages.about'); }
