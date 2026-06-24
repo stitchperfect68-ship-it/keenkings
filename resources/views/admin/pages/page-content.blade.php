@@ -15,7 +15,7 @@
     <button class="tab-btn" data-tab="home-sections">Home Sections</button>
     <button class="tab-btn" data-tab="parallax">Parallax Banners</button>
     <button class="tab-btn" data-tab="contact">Contact</button>
-    <button class="tab-btn" data-tab="process">Process Steps</button>
+    <button class="tab-btn" data-tab="process">Process Section</button>
     <button class="tab-btn" data-tab="portfolio-page">Portfolio Page</button>
     <button class="tab-btn" data-tab="blog-page">Blog Page</button>
 </div>
@@ -99,6 +99,12 @@
             <div class="form-group">
                 <label>Intro Description</label>
                 <textarea name="services_description" rows="3">{{ old('services_description', $settings->services_description) }}</textarea>
+            </div>
+            <div style="margin-top:16px; padding:14px 16px; background:rgba(137,221,223,.08); border:1px solid rgba(137,221,223,.2); border-radius:8px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+                <p style="font-size:13px; margin:0; opacity:.8;">Manage the individual service cards (add, edit, delete) in the Services section.</p>
+                <a href="{{ route('admin.services.index') }}" class="btn btn-ghost" style="white-space:nowrap; flex-shrink:0;">
+                    <i data-feather="briefcase"></i> Manage Services
+                </a>
             </div>
         </div>
 
@@ -296,56 +302,35 @@
     </form>
 </div>
 
-{{-- ── TAB: Process Steps ── --}}
+{{-- ── TAB: Process Section ── --}}
 <div class="tab-panel" id="tab-process">
-    <div class="form-card">
-        <h3 class="form-section-title"><i data-feather="git-pull-request"></i> Process Steps</h3>
-        <div class="stats-admin-list">
-            @forelse($processSteps as $step)
-            <form method="POST" action="{{ route('admin.page-content.steps.update', $step) }}" class="stat-edit-row" style="align-items:flex-start; flex-wrap:wrap; gap:12px;">
-                @csrf @method('PUT')
-                <div style="flex:1; min-width:140px;">
-                    <input type="text" name="title" value="{{ $step->title }}" placeholder="Step Title" required style="width:100%; margin-bottom:8px;">
-                    <textarea name="description" rows="3" style="width:100%; font-size:12px;">{{ $step->description }}</textarea>
-                </div>
-                <div style="display:flex; flex-direction:column; gap:8px; padding-top:4px;">
-                    <label class="toggle-label small">
-                        <input type="hidden" name="is_active" value="0">
-                        <input type="checkbox" name="is_active" value="1" {{ $step->is_active ? 'checked' : '' }}>
-                        <span class="toggle-switch"></span>
-                    </label>
-                    <button type="submit" class="action-btn" title="Save"><i data-feather="save"></i></button>
-                    <a href="{{ route('admin.page-content.steps.destroy', $step) }}"
-                       onclick="event.preventDefault(); if(confirm('Delete this step?')) { document.getElementById('del-step-{{ $step->id }}').submit(); }"
-                       class="action-btn danger" title="Delete"><i data-feather="trash-2"></i></a>
-                    <form id="del-step-{{ $step->id }}" method="POST" action="{{ route('admin.page-content.steps.destroy', $step) }}" style="display:none">
-                        @csrf @method('DELETE')
-                    </form>
-                </div>
-            </form>
-            @empty
-            <p class="empty-state">No process steps yet. Add one below.</p>
-            @endforelse
-        </div>
-    </div>
+    <form method="POST" action="{{ route('admin.page-content.update') }}" class="admin-form">
+        @csrf @method('PUT')
 
-    <div class="form-card">
-        <h3 class="form-section-title"><i data-feather="plus-circle"></i> Add New Step</h3>
-        <form method="POST" action="{{ route('admin.page-content.steps.store') }}" class="admin-form">
-            @csrf
-            <div class="form-group">
-                <label>Step Title</label>
-                <input type="text" name="title" placeholder="e.g. Discovery Call" required maxlength="100">
+        <div class="form-card">
+            <h3 class="form-section-title"><i data-feather="git-pull-request"></i> Process Section Headings</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Eyebrow Tag</label>
+                    <input type="text" name="process_tag" value="{{ old('process_tag', $settings->process_tag) }}" maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label>Section Title</label>
+                    <input type="text" name="process_title" value="{{ old('process_title', $settings->process_title) }}" maxlength="200">
+                </div>
             </div>
-            <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" rows="3" placeholder="Describe this step..." required></textarea>
+            <div style="margin-top:16px; padding:14px 16px; background:rgba(137,221,223,.08); border:1px solid rgba(137,221,223,.2); border-radius:8px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+                <p style="font-size:13px; margin:0; opacity:.8;">Add, edit, and delete individual process steps in the dedicated section.</p>
+                <a href="{{ route('admin.process-steps.index') }}" class="btn btn-ghost" style="white-space:nowrap; flex-shrink:0;">
+                    <i data-feather="git-pull-request"></i> Manage Steps
+                </a>
             </div>
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary"><i data-feather="plus"></i> Add Step</button>
-            </div>
-        </form>
-    </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary"><i data-feather="save"></i> Save Process Headings</button>
+        </div>
+    </form>
 </div>
 
 {{-- ── TAB: Portfolio Page ── --}}

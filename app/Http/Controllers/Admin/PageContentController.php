@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PageSetting;
-use App\Models\ProcessStep;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,12 +12,7 @@ class PageContentController extends Controller
     public function index()
     {
         $settings = PageSetting::current();
-        try {
-            $processSteps = ProcessStep::orderBy('sort_order')->get();
-        } catch (\Exception $e) {
-            $processSteps = collect();
-        }
-        return view('admin.pages.page-content', compact('settings', 'processSteps'));
+        return view('admin.pages.page-content', compact('settings'));
     }
 
     public function update(Request $request)
@@ -107,47 +101,5 @@ class PageContentController extends Controller
         $settings->update($data);
 
         return back()->with('success', 'Page content updated successfully.');
-    }
-
-    // Process Steps CRUD
-    public function storeStep(Request $request)
-    {
-        $request->validate([
-            'title'       => 'required|string|max:100',
-            'description' => 'required|string|max:1000',
-        ]);
-
-        $max = ProcessStep::max('sort_order') ?? 0;
-        ProcessStep::create([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'sort_order'  => $max + 1,
-            'is_active'   => true,
-        ]);
-
-        return back()->with('success', 'Process step added.');
-    }
-
-    public function updateStep(Request $request, ProcessStep $step)
-    {
-        $request->validate([
-            'title'       => 'required|string|max:100',
-            'description' => 'required|string|max:1000',
-            'is_active'   => 'nullable|boolean',
-        ]);
-
-        $step->update([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'is_active'   => $request->boolean('is_active'),
-        ]);
-
-        return back()->with('success', 'Process step updated.');
-    }
-
-    public function destroyStep(ProcessStep $step)
-    {
-        $step->delete();
-        return back()->with('success', 'Process step deleted.');
     }
 }

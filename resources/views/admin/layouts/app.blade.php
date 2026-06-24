@@ -54,6 +54,9 @@
                     @php $clientCount = \App\Models\Client::count(); @endphp
                     <span class="nav-badge">{{ $clientCount }}</span>
                 </a>
+                <a href="{{ route('admin.process-steps.index') }}" class="nav-item {{ request()->routeIs('admin.process-steps.*') ? 'active' : '' }}">
+                    <i data-feather="git-pull-request"></i><span>Process Steps</span>
+                </a>
             </div>
 
             <div class="nav-section">

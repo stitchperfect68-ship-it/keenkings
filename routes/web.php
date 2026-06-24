@@ -68,9 +68,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Page Content
         Route::get('page-content',  [Admin\PageContentController::class, 'index'])->name('page-content.index');
         Route::put('page-content',  [Admin\PageContentController::class, 'update'])->name('page-content.update');
-        Route::post('page-content/steps',              [Admin\PageContentController::class, 'storeStep'])->name('page-content.steps.store');
-        Route::put('page-content/steps/{step}',        [Admin\PageContentController::class, 'updateStep'])->name('page-content.steps.update');
-        Route::delete('page-content/steps/{step}',     [Admin\PageContentController::class, 'destroyStep'])->name('page-content.steps.destroy');
+
+        // Process Steps
+        Route::resource('process-steps', Admin\ProcessStepsController::class)->except(['show']);
 
         // Footer & Social Links
         Route::get('footer',  [Admin\FooterController::class, 'index'])->name('footer.index');
