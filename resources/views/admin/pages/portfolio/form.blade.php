@@ -126,10 +126,19 @@
             <div class="form-card">
                 <h3 class="form-section-title"><i data-feather="video"></i> Video (Videography only)</h3>
                 <div class="form-group">
-                    <label>Video Embed URL</label>
-                    <input type="url" name="video_url" value="{{ old('video_url', $item->video_url ?? '') }}"
-                           placeholder="https://www.youtube.com/embed/...">
-                    <small>Use YouTube embed URL format: youtube.com/embed/VIDEO_ID</small>
+                    <label>YouTube URL</label>
+                    <input type="text" name="video_url" id="videoUrlInput"
+                           value="{{ old('video_url', $item->video_url ?? '') }}"
+                           placeholder="Paste any YouTube link…">
+                    <small style="color:rgba(255,255,255,0.4)">
+                        Accepts any format — watch, short link, Shorts, Live, embed, or nocookie.
+                        If no cover image is set, the video thumbnail is used automatically.
+                    </small>
+                </div>
+                <div id="videoThumbPreview" style="display:none;margin-top:8px;">
+                    <p style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:rgba(255,255,255,.35);margin-bottom:6px;">Auto-thumbnail preview</p>
+                    <img id="videoThumbImg" src="" alt="YouTube thumbnail"
+                         style="width:100%;max-height:160px;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,0.1);">
                 </div>
             </div>
         </div>
@@ -186,5 +195,50 @@ function showPreview(src) {
     document.getElementById('imagePreview').innerHTML =
         `<img src="${src}" alt="Preview" style="width:100%;height:100%;object-fit:cover">`;
 }
+
+// Extract YouTube video ID from any URL format
+function extractYoutubeId(url) {
+    if (!url) return null;
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url.replace(/^\/+/, '');
+    const patterns = [
+        /youtu\.be\/([A-Za-z0-9_-]{11})/i,
+        /[?&]v=([A-Za-z0-9_-]{11})/i,
+        /youtube(?:-nocookie)?\.com\/embed\/([A-Za-z0-9_-]{11})/i,
+        /youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/i,
+        /youtube\.com\/live\/([A-Za-z0-9_-]{11})/i,
+        /youtube\.com\/v\/([A-Za-z0-9_-]{11})/i,
+    ];
+    for (const p of patterns) {
+        const m = url.match(p);
+        if (m) return m[1];
+    }
+    return null;
+}
+
+// Show YouTube thumbnail preview when a video URL is pasted
+const videoUrlInput  = document.getElementById('videoUrlInput');
+const videoThumbWrap = document.getElementById('videoThumbPreview');
+const videoThumbImg  = document.getElementById('videoThumbImg');
+
+function updateVideoThumb() {
+    const id = extractYoutubeId(videoUrlInput.value.trim());
+    if (id) {
+        const thumb = `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
+        videoThumbImg.src  = thumb;
+        videoThumbWrap.style.display = 'block';
+
+        // If no cover image has been set yet, mirror the thumbnail into the image preview
+        const imageUrlField = document.querySelector('input[name="image_url"]');
+        const imagePreview  = document.getElementById('imagePreview');
+        const hasImage = imageUrlField?.value || document.querySelector('input[name="image_file"]')?.files?.length;
+        if (!hasImage) showPreview(thumb);
+    } else {
+        videoThumbWrap.style.display = 'none';
+    }
+}
+
+videoUrlInput?.addEventListener('input', updateVideoThumb);
+// Run on load for edit page
+if (videoUrlInput?.value) updateVideoThumb();
 </script>
 @endpush

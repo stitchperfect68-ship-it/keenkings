@@ -56,19 +56,32 @@ class PortfolioController extends Controller
             'sub_category'    => 'required|string|max:100',
             'title'           => 'required|string|max:255',
             'size'            => 'nullable|in:,wide,tall,feature',
-            'image_url'       => 'required_without:image_file|nullable|url|max:500',
+            'image_url'       => 'required_without_all:image_file,video_url|nullable|max:500',
             'image_file'      => 'nullable|image|max:5120',
-            'video_url'       => 'nullable|url|max:500',
+            'video_url'       => 'nullable|string|max:500',
             'description'     => 'nullable|string|max:1000',
             'sort_order'      => 'nullable|integer',
             'is_active'       => 'nullable|boolean',
         ]);
+
+        // Normalize video URL to embed format before saving
+        if (!empty($data['video_url'])) {
+            $data['video_url'] = PortfolioItem::normalizeVideoUrl($data['video_url']);
+        }
 
         if ($request->hasFile('image_file')) {
             $disk = config('filesystems.media_disk');
             $path = $request->file('image_file')->store('portfolio', $disk);
             $data['image_path'] = $path;
             $data['image_url']  = Storage::disk($disk)->url($path);
+        }
+
+        // Auto-set YouTube thumbnail when no image is provided
+        if (empty($data['image_url']) && !$request->hasFile('image_file') && !empty($data['video_url'])) {
+            $ytId = PortfolioItem::extractYoutubeId($data['video_url']);
+            if ($ytId) {
+                $data['image_url'] = 'https://img.youtube.com/vi/' . $ytId . '/hqdefault.jpg';
+            }
         }
 
         $data['size']        = $data['size'] ?? '';
@@ -97,13 +110,18 @@ class PortfolioController extends Controller
             'sub_category'    => 'required|string|max:100',
             'title'           => 'required|string|max:255',
             'size'            => 'nullable|in:,wide,tall,feature',
-            'image_url'       => 'nullable|url|max:500',
+            'image_url'       => 'nullable|max:500',
             'image_file'      => 'nullable|image|max:5120',
-            'video_url'       => 'nullable|url|max:500',
+            'video_url'       => 'nullable|string|max:500',
             'description'     => 'nullable|string|max:1000',
             'sort_order'      => 'nullable|integer',
             'is_active'       => 'nullable|boolean',
         ]);
+
+        // Normalize video URL to embed format before saving
+        if (!empty($data['video_url'])) {
+            $data['video_url'] = PortfolioItem::normalizeVideoUrl($data['video_url']);
+        }
 
         if ($request->hasFile('image_file')) {
             $disk = config('filesystems.media_disk');
@@ -111,6 +129,14 @@ class PortfolioController extends Controller
             $path = $request->file('image_file')->store('portfolio', $disk);
             $data['image_path'] = $path;
             $data['image_url']  = Storage::disk($disk)->url($path);
+        }
+
+        // Auto-set YouTube thumbnail when no image is provided
+        if (empty($data['image_url']) && !$request->hasFile('image_file') && !empty($data['video_url'])) {
+            $ytId = PortfolioItem::extractYoutubeId($data['video_url']);
+            if ($ytId) {
+                $data['image_url'] = 'https://img.youtube.com/vi/' . $ytId . '/hqdefault.jpg';
+            }
         }
 
         $data['size']      = $data['size'] ?? '';
