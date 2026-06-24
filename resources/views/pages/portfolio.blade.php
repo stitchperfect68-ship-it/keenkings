@@ -175,9 +175,15 @@
 /* Enhanced lightbox */
 .lightbox-media {
   position: relative;
-  max-width: min(90vw,1100px);
+  width: min(90vw, 1100px);
   max-height: 88vh;
   display: flex; align-items: center; justify-content: center;
+}
+.lightbox-media iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
 }
 .lightbox-media img { max-width: 100%; max-height: 85vh; object-fit: contain; display: block; }
 .lightbox-caption {
@@ -421,7 +427,7 @@ function renderLB(){
   var sl=(subsForParent.find(function(s){return s.v===item.s;})||{}).l||item.s;
   var m=document.getElementById('lightboxMedia');
   if(item.vid){
-    m.innerHTML='<iframe src="'+item.vid+'" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width:100%;aspect-ratio:16/9;max-width:960px;max-height:80vh;"></iframe>'
+    m.innerHTML='<iframe src="'+item.vid+'?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
       +'<div class="lightbox-caption">'+item.t+' &nbsp;·&nbsp; '+sl+'</div>';
   } else {
     m.innerHTML='<img src="'+item.img+'" alt="'+item.t+'" style="max-width:min(90vw,1100px);max-height:85vh;object-fit:contain"/>'
@@ -437,6 +443,7 @@ function lbNav(dir){
 function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow='';
+  document.getElementById('lightboxMedia').innerHTML='';
 }
 
 document.addEventListener('keydown',function(e){

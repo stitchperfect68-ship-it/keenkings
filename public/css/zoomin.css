@@ -625,6 +625,28 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
 }
 .lightbox-close:hover { color: var(--accent); }
 
+/* Play button overlay on video portfolio items */
+.portfolio-item .play-btn {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(.85);
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.7);
+  background: rgba(0,0,0,.38);
+  backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: .88;
+  transition: opacity .3s, transform .3s, border-color .3s, background .3s;
+  pointer-events: none;
+  z-index: 4;
+}
+.portfolio-item:hover .play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  border-color: var(--accent, #89dddf);
+  background: rgba(137,221,223,.18);
+}
+
 /* Page Hero */
 .page-hero {
   position: relative;

@@ -123,6 +123,13 @@
            data-video="{{ $item['vid'] }}"
            onclick="openLightbox(this)">
         <img src="{{ $item['img'] }}" alt="{{ $item['t'] }}" loading="lazy"/>
+        @if($item['vid'])
+        <div class="play-btn">
+          <svg width="13" height="15" viewBox="0 0 13 15" fill="none">
+            <path d="M1.5 1.5l10 6-10 6V1.5z" fill="white" fill-opacity=".95"/>
+          </svg>
+        </div>
+        @endif
         <div class="portfolio-item-overlay">
           <div class="portfolio-item-info">
             <div class="portfolio-item-cat">{{ ucfirst($item['p']) }}</div>
