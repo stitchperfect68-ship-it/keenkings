@@ -53,19 +53,19 @@
 .hero-activity-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 20px 12px 12px;
+  gap: 16px;
+  padding: 14px 24px 14px 14px;
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
-  max-width: 280px;
+  max-width: 420px;
   transition: background .22s;
 }
 .hero-activity-item:hover { background: rgba(255,255,255,.06); }
 .hero-activity-thumb {
-  width: 56px;
-  height: 56px;
-  border-radius: 8px;
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
   border: 1px solid rgba(255,255,255,.1);
@@ -74,42 +74,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 28px;
   background: rgba(255,255,255,.05);
   color: rgba(255,255,255,.5);
 }
 .hero-activity-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   min-width: 0;
 }
 .hero-activity-cat {
-  font-size: 10px;
-  letter-spacing: .15em;
+  font-size: 11px;
+  letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--accent, #89dddf);
-  opacity: .85;
+  opacity: .9;
   font-family: var(--font-sans);
   white-space: nowrap;
 }
 .hero-activity-name {
-  font-size: 15px;
+  font-size: 18px;
   font-family: var(--font-sans);
   font-weight: 500;
-  color: rgba(255,255,255,.88);
+  color: rgba(255,255,255,.92);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 190px;
+  max-width: 300px;
   letter-spacing: .01em;
-}
-.hero-activity-div {
-  width: 1px;
-  height: 44px;
-  background: rgba(255,255,255,.09);
-  flex-shrink: 0;
-  margin: 0 3px;
 }
 /* Mobile — push hero content to top, strip stays at bottom */
 @media (max-width: 600px) {
@@ -155,26 +148,13 @@
   </div>
 
   {{-- ── Recent Activity Strip ── --}}
-  @if($latestPortfolio || $latestBlog)
+  @if($latestBlog)
   <div class="hero-activity">
     <p class="hero-activity-label">
       <span class="hero-activity-pulse"></span>
-      Recently Added
+      Recent Activities
     </p>
     <div class="hero-activity-rail">
-      @if($latestPortfolio)
-      <a href="{{ route('portfolio') }}" class="hero-activity-item">
-        <img src="{{ $latestPortfolio->imageUrl() }}" alt="{{ $latestPortfolio->title }}" class="hero-activity-thumb" loading="lazy">
-        <div class="hero-activity-meta">
-          <span class="hero-activity-cat">{{ ucfirst($latestPortfolio->parent_category) }}</span>
-          <span class="hero-activity-name">{{ \Illuminate\Support\Str::limit($latestPortfolio->title, 22) }}</span>
-        </div>
-      </a>
-      @endif
-      @if($latestPortfolio && $latestBlog)
-      <div class="hero-activity-div"></div>
-      @endif
-      @if($latestBlog)
       <a href="{{ route('blog.show', $latestBlog->slug) }}" class="hero-activity-item">
         @if($latestBlog->featured_image_url)
         <img src="{{ $latestBlog->featured_image_url }}" alt="{{ $latestBlog->title }}" class="hero-activity-thumb" loading="lazy">
@@ -183,10 +163,9 @@
         @endif
         <div class="hero-activity-meta">
           <span class="hero-activity-cat">Blog{{ $latestBlog->category ? ' · ' . $latestBlog->category : '' }}</span>
-          <span class="hero-activity-name">{{ \Illuminate\Support\Str::limit($latestBlog->title, 22) }}</span>
+          <span class="hero-activity-name">{{ \Illuminate\Support\Str::limit($latestBlog->title, 36) }}</span>
         </div>
       </a>
-      @endif
     </div>
   </div>
   @endif
