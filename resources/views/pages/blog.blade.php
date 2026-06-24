@@ -7,14 +7,14 @@
 <!-- Page Hero -->
 <section class="page-hero">
   <div class="page-hero-bg parallax-bg"
-       style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80')"></div>
+       style="background-image: url('{{ $pageSettings->blog_page_image_url ?: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80' }}')"></div>
   <div class="page-hero-content reveal">
     <div class="breadcrumb">
       <a href="{{ route('home') }}">Home</a>
       <span class="breadcrumb-sep">✦</span>
       <span class="breadcrumb-current">Blog</span>
     </div>
-    <h1 class="page-hero-title">Stories &amp; <em>Insights</em></h1>
+    <h1 class="page-hero-title">{{ $pageSettings->blog_page_title }}</h1>
   </div>
 </section>
 

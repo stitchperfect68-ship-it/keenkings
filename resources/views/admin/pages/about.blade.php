@@ -44,6 +44,14 @@
                 <label>Body Paragraph</label>
                 <textarea name="body_text" rows="5" required>{{ old('body_text', $about->body_text) }}</textarea>
             </div>
+            <div class="form-group">
+                <label>Blockquote</label>
+                <textarea name="quote" rows="3" placeholder="Our commitment to creativity...">{{ old('quote', $about->quote) }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Skill Pills <small style="opacity:.6;">(one per line)</small></label>
+                <textarea name="skills" rows="8" placeholder="Photography&#10;Videography&#10;...">{{ old('skills', is_array($about->skills) ? implode("\n", $about->skills) : '') }}</textarea>
+            </div>
 
             <h3 class="form-section-title mt"><i data-feather="zap"></i> Pillars</h3>
             <div class="form-row form-row-3">

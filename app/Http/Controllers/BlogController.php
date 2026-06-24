@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\PageSetting;
 
 class BlogController extends Controller
 {
     public function index()
     {
-        $posts = BlogPost::published()->paginate(9);
-        return view('pages.blog', compact('posts'));
+        $posts        = BlogPost::published()->paginate(9);
+        $pageSettings = PageSetting::current();
+        return view('pages.blog', compact('posts', 'pageSettings'));
     }
 
     public function show(string $slug)

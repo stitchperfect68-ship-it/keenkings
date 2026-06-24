@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PortfolioItem;
+use App\Models\PageSetting;
 
 class PortfolioController extends Controller
 {
@@ -15,8 +16,9 @@ class PortfolioController extends Controller
             ->values()
             ->toArray();
 
-        $subs = $this->getSubCategories();
-        return view('pages.portfolio', compact('items', 'subs'));
+        $subs         = $this->getSubCategories();
+        $pageSettings = PageSetting::current();
+        return view('pages.portfolio', compact('items', 'subs', 'pageSettings'));
     }
 
     // Returns SUBS in {v, l} format matching the static portfolio.html JS

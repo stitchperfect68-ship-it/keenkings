@@ -75,29 +75,47 @@
 @yield('content')
 
 <!-- ─── FOOTER ─── -->
+@php
+    try {
+        $footerSettings  = \App\Models\PageSetting::current();
+        $footerSocial    = \App\Models\SocialLink::active()->get();
+        $footerServices  = \App\Models\Service::active()->take(6)->get();
+    } catch (\Exception $e) {
+        $footerSettings = null;
+        $footerSocial   = collect();
+        $footerServices = collect();
+    }
+@endphp
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <a href="{{ route('home') }}" class="nav-logo">
         <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:40px;width:auto;display:block;">
       </a>
-      <p>Dynamic media production studio based in Lusaka. Specializing in storytelling, digital content creation, and brand development since 2016.</p>
+      <p>{{ $footerSettings?->footer_description ?? 'Dynamic media production studio based in Lusaka. Specializing in storytelling, digital content creation, and brand development since 2016.' }}</p>
+      @if($footerSocial->isNotEmpty())
       <div class="social-links">
-        <a href="#" class="social-link">ig</a>
-        <a href="#" class="social-link">fb</a>
-        <a href="#" class="social-link">yt</a>
-        <a href="#" class="social-link">li</a>
+        @foreach($footerSocial as $link)
+        <a href="{{ $link->url }}" class="social-link" target="_blank" rel="noopener noreferrer">{{ $link->platform }}</a>
+        @endforeach
       </div>
+      @endif
     </div>
     <div class="footer-col">
       <h4>Services</h4>
       <ul>
-        <li><a href="{{ route('home') }}#services">Portrait Sessions</a></li>
-        <li><a href="{{ route('home') }}#services">Wedding Photography</a></li>
-        <li><a href="{{ route('home') }}#services">Editorial &amp; Fashion</a></li>
-        <li><a href="{{ route('home') }}#services">Commercial Work</a></li>
-        <li><a href="{{ route('home') }}#services">Fine Art Prints</a></li>
-        <li><a href="{{ route('home') }}#services">Workshops</a></li>
+        @if($footerServices->isNotEmpty())
+          @foreach($footerServices as $svc)
+          <li><a href="{{ route('home') }}#services">{{ $svc->title }}</a></li>
+          @endforeach
+        @else
+          <li><a href="{{ route('home') }}#services">Photography</a></li>
+          <li><a href="{{ route('home') }}#services">Videography</a></li>
+          <li><a href="{{ route('home') }}#services">Digital Marketing</a></li>
+          <li><a href="{{ route('home') }}#services">Branding</a></li>
+          <li><a href="{{ route('home') }}#services">Content Production</a></li>
+          <li><a href="{{ route('home') }}#services">Event Coverage</a></li>
+        @endif
       </ul>
     </div>
     <div class="footer-col">
@@ -111,20 +129,19 @@
         <li><a href="{{ route('home') }}#contact">Contact</a></li>
       </ul>
     </div>
+    @if($footerSocial->isNotEmpty())
     <div class="footer-col">
       <h4>Connect</h4>
       <ul>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Facebook</a></li>
-        <li><a href="#">Pinterest</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Behance</a></li>
+        @foreach($footerSocial as $link)
+        <li><a href="{{ $link->url }}" target="_blank" rel="noopener noreferrer">{{ $link->label }}</a></li>
+        @endforeach
       </ul>
     </div>
+    @endif
   </div>
   <div class="footer-bottom">
-    <p>© {{ date('Y') }} Keenkings Media. All rights reserved.</p>
-    <p><a href="#">Privacy Policy</a> · <a href="#">Terms of Use</a></p>
+    <p>© {{ date('Y') }} {{ $footerSettings?->footer_copyright ?? 'Keenkings Media. All rights reserved.' }}</p>
   </div>
 </footer>
 

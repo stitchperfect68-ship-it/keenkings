@@ -61,8 +61,22 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('enquiries', Admin\EnquiriesController::class)->only(['index','show','destroy']);
         Route::patch('enquiries/{enquiry}/status', [Admin\EnquiriesController::class, 'updateStatus'])->name('enquiries.status');
 
-        // Settings
+        // Settings (fonts)
         Route::get('settings',  [Admin\SettingsController::class, 'index'])->name('settings.index');
         Route::put('settings',  [Admin\SettingsController::class, 'update'])->name('settings.update');
+
+        // Page Content
+        Route::get('page-content',  [Admin\PageContentController::class, 'index'])->name('page-content.index');
+        Route::put('page-content',  [Admin\PageContentController::class, 'update'])->name('page-content.update');
+        Route::post('page-content/steps',              [Admin\PageContentController::class, 'storeStep'])->name('page-content.steps.store');
+        Route::put('page-content/steps/{step}',        [Admin\PageContentController::class, 'updateStep'])->name('page-content.steps.update');
+        Route::delete('page-content/steps/{step}',     [Admin\PageContentController::class, 'destroyStep'])->name('page-content.steps.destroy');
+
+        // Footer & Social Links
+        Route::get('footer',  [Admin\FooterController::class, 'index'])->name('footer.index');
+        Route::put('footer',  [Admin\FooterController::class, 'update'])->name('footer.update');
+        Route::post('footer/social-links',              [Admin\FooterController::class, 'storeSocialLink'])->name('footer.social.store');
+        Route::put('footer/social-links/{link}',        [Admin\FooterController::class, 'updateSocialLink'])->name('footer.social.update');
+        Route::delete('footer/social-links/{link}',     [Admin\FooterController::class, 'destroySocialLink'])->name('footer.social.destroy');
     });
 });

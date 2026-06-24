@@ -12,12 +12,12 @@
   <div class="hero-bg" id="heroBg" style="background-image: url('{{ $heroSlides->first()->image_url ?? 'https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1800&q=80' }}');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-tag">Media Production Studio</span>
-    <h1 class="hero-title">Pictures with <em>Love</em><br/>for Creativity</h1>
-    <p class="hero-desc">Keenkings Media is a dynamic media production company specializing in storytelling, digital content creation, and brand development. We bring your vision to life with precision and passion.</p>
+    <span class="hero-tag">{{ $pageSettings->hero_tag }}</span>
+    <h1 class="hero-title">{!! nl2br(e($pageSettings->hero_title)) !!}</h1>
+    <p class="hero-desc">{{ $pageSettings->hero_description }}</p>
     <div class="hero-actions">
-      <a href="#portfolio" class="btn-primary">View Portfolio</a>
-      <a href="#about" class="btn-ghost">About Us</a>
+      <a href="#portfolio" class="btn-primary">{{ $pageSettings->hero_cta_primary }}</a>
+      <a href="#about" class="btn-ghost">{{ $pageSettings->hero_cta_secondary }}</a>
     </div>
   </div>
   <div class="hero-scroll">
@@ -46,24 +46,12 @@
 </div>
 
 <!-- Ticker -->
+@php $tickerItems = $pageSettings->ticker_items ?: ['Portrait Photography','Wedding Stories','Editorial Work','Commercial Shoots','Nature & Landscape','Fine Art Prints','Fashion Photography','Event Coverage']; @endphp
 <div class="ticker">
   <div class="ticker-inner" id="ticker">
-    <span class="ticker-item">Portrait Photography</span>
-    <span class="ticker-item">Wedding Stories</span>
-    <span class="ticker-item">Editorial Work</span>
-    <span class="ticker-item">Commercial Shoots</span>
-    <span class="ticker-item">Nature &amp; Landscape</span>
-    <span class="ticker-item">Fine Art Prints</span>
-    <span class="ticker-item">Fashion Photography</span>
-    <span class="ticker-item">Event Coverage</span>
-    <span class="ticker-item">Portrait Photography</span>
-    <span class="ticker-item">Wedding Stories</span>
-    <span class="ticker-item">Editorial Work</span>
-    <span class="ticker-item">Commercial Shoots</span>
-    <span class="ticker-item">Nature &amp; Landscape</span>
-    <span class="ticker-item">Fine Art Prints</span>
-    <span class="ticker-item">Fashion Photography</span>
-    <span class="ticker-item">Event Coverage</span>
+    @foreach(array_merge($tickerItems, $tickerItems) as $item)
+    <span class="ticker-item">{{ $item }}</span>
+    @endforeach
   </div>
 </div>
 
@@ -81,19 +69,20 @@
     </div>
     <!-- Text side -->
     <div class="about-content">
-      <span class="section-tag reveal">About the Studio</span>
-      <h2 class="section-title reveal">Where Vision<br/>Meets <em>Innovation</em></h2>
+      <span class="section-tag reveal">{{ $about->eyebrow }}</span>
+      <h2 class="section-title reveal">{!! nl2br(e($about->heading)) !!}</h2>
       <p class="section-body reveal">{{ $about->lead_text }}</p>
-      <blockquote class="about-quote reveal">"Our commitment to creativity, innovation, and integrity drives us to deliver impactful content."</blockquote>
+      @if($about->quote)
+      <blockquote class="about-quote reveal">"{{ $about->quote }}"</blockquote>
+      @endif
       <p class="section-body reveal">{{ $about->body_text }}</p>
+      @if($about->skills && count($about->skills))
       <div class="about-skills reveal">
-        <span class="skill-pill">Photography</span>
-        <span class="skill-pill">Videography</span>
-        <span class="skill-pill">Digital Marketing</span>
-        <span class="skill-pill">Branding</span>
-        <span class="skill-pill">Consultancy</span>
-        <span class="skill-pill">Social Media</span>
+        @foreach($about->skills as $skill)
+        <span class="skill-pill">{{ $skill }}</span>
+        @endforeach
       </div>
+      @endif
     </div>
   </div>
 </section>
@@ -106,8 +95,8 @@
   <div class="portfolio-section">
     <div class="portfolio-header">
       <div>
-        <span class="section-tag reveal">Selected Works</span>
-        <h2 class="section-title reveal">Portfolio</h2>
+        <span class="section-tag reveal">{{ $pageSettings->portfolio_section_tag }}</span>
+        <h2 class="section-title reveal">{{ $pageSettings->portfolio_section_title }}</h2>
       </div>
       <div class="portfolio-filters reveal">
         <button class="filter-btn active" data-filter="all">All</button>
@@ -154,13 +143,19 @@
 ════════════════════════════════════════════ -->
 <div class="parallax-banner">
   <div class="parallax-bg parallax-bg--subtle"
-       style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=80');"
+       style="background-image: url('{{ $pageSettings->parallax1_image_url ?: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1800&q=80' }}');"
        data-parallax-speed="0.4"></div>
   <div class="parallax-banner-content">
-    <span class="section-tag reveal" style="display:block;margin-bottom:16px;">The Art of Seeing</span>
-    <h2 class="parallax-banner-title reveal">Every Frame is a<br/><em>Decision</em></h2>
-    <p class="parallax-banner-body reveal">Photography is not about the camera. It is about the eye, the patience, and the quiet bravery to press the shutter at exactly the right moment.</p>
-    <a href="{{ route('portfolio') }}" class="btn-primary reveal">Explore the Work</a>
+    @if($pageSettings->parallax1_tag)
+    <span class="section-tag reveal" style="display:block;margin-bottom:16px;">{{ $pageSettings->parallax1_tag }}</span>
+    @endif
+    <h2 class="parallax-banner-title reveal">{!! nl2br(e($pageSettings->parallax1_title)) !!}</h2>
+    @if($pageSettings->parallax1_body)
+    <p class="parallax-banner-body reveal">{{ $pageSettings->parallax1_body }}</p>
+    @endif
+    @if($pageSettings->parallax1_cta)
+    <a href="{{ route('portfolio') }}" class="btn-primary reveal">{{ $pageSettings->parallax1_cta }}</a>
+    @endif
   </div>
 </div>
 
@@ -172,10 +167,12 @@
   <div class="services-inner">
     <div class="services-top">
       <div>
-        <span class="section-tag reveal">What We Offer</span>
-        <h2 class="section-title reveal" style="color: var(--light-heading);">Services &amp;<br/><em>Packages</em></h2>
+        <span class="section-tag reveal">{{ $pageSettings->services_tag }}</span>
+        <h2 class="section-title reveal" style="color: var(--light-heading);">{!! nl2br(e($pageSettings->services_title)) !!}</h2>
       </div>
-      <p class="section-body reveal" style="max-width:380px; color: var(--light-muted);">From intimate portrait sessions to full-scale commercial productions — we tailor every shoot to your vision.</p>
+      @if($pageSettings->services_description)
+      <p class="section-body reveal" style="max-width:380px; color: var(--light-muted);">{{ $pageSettings->services_description }}</p>
+      @endif
     </div>
     <div class="services-grid">
       @foreach($services as $i => $service)
@@ -239,7 +236,6 @@
   $row1 = $clientRows->get(1, collect());
   $row2 = $clientRows->get(2, collect());
   $row3 = $clientRows->get(3, collect());
-  // Fallback: if a row is empty, use all clients
   $all  = $clientRows->flatten();
   if ($row1->isEmpty()) $row1 = $all;
   if ($row2->isEmpty()) $row2 = $all;
@@ -247,8 +243,8 @@
 @endphp
 <section class="clients-section">
   <div class="clients-header reveal">
-    <span class="section-tag" style="display:block;margin-bottom:10px;">Trusted By</span>
-    <h2 class="section-title" style="color:var(--white);">Our <em>Clients</em></h2>
+    <span class="section-tag" style="display:block;margin-bottom:10px;">{{ $pageSettings->clients_tag }}</span>
+    <h2 class="section-title" style="color:var(--white);">{{ $pageSettings->clients_title }}</h2>
   </div>
 
   <div class="clients-track-wrap">
@@ -332,12 +328,16 @@
 ════════════════════════════════════════════ -->
 <div class="parallax-banner">
   <div class="parallax-bg"
-       style="background-image: url('https://images.unsplash.com/photo-1483653364400-eedcfb9f1f88?w=1800&q=80');"
+       style="background-image: url('{{ $pageSettings->parallax2_image_url ?: 'https://images.unsplash.com/photo-1483653364400-eedcfb9f1f88?w=1800&q=80' }}');"
        data-parallax-speed="0.35"></div>
   <div class="parallax-banner-content">
-    <span class="section-tag reveal" style="display:block;margin-bottom:16px;">Behind the Lens</span>
-    <h2 class="parallax-banner-title reveal"><em>Light</em> Changes<br/>Everything</h2>
-    <p class="parallax-banner-body reveal">From golden-hour portraits to the drama of controlled studio light — the right illumination transforms a good photograph into an unforgettable one.</p>
+    @if($pageSettings->parallax2_tag)
+    <span class="section-tag reveal" style="display:block;margin-bottom:16px;">{{ $pageSettings->parallax2_tag }}</span>
+    @endif
+    <h2 class="parallax-banner-title reveal">{!! nl2br(e($pageSettings->parallax2_title)) !!}</h2>
+    @if($pageSettings->parallax2_body)
+    <p class="parallax-banner-body reveal">{{ $pageSettings->parallax2_body }}</p>
+    @endif
   </div>
 </div>
 
@@ -348,26 +348,16 @@
 <section id="process" class="section--light-alt">
   <div class="process-inner">
     <div class="process-header">
-      <span class="section-tag reveal">How It Works</span>
-      <h2 class="section-title reveal">Our Creative <em>Process</em></h2>
+      <span class="section-tag reveal">{{ $pageSettings->process_tag }}</span>
+      <h2 class="section-title reveal">{{ $pageSettings->process_title }}</h2>
     </div>
     <div class="process-steps">
-      <div class="process-step reveal">
-        <div class="process-step-title">Discovery Call</div>
-        <p class="process-step-desc">We start with a conversation. We learn about your vision, goals, and the story you want to tell. No commitment required.</p>
+      @foreach($processSteps as $i => $step)
+      <div class="process-step reveal{{ $i > 0 ? ' reveal-delay-'.$i : '' }}">
+        <div class="process-step-title">{{ $step->title }}</div>
+        <p class="process-step-desc">{{ $step->description }}</p>
       </div>
-      <div class="process-step reveal reveal-delay-1">
-        <div class="process-step-title">Creative Planning</div>
-        <p class="process-step-desc">From location scouting to mood boards, we prepare every detail to ensure your shoot runs smoothly and looks stunning.</p>
-      </div>
-      <div class="process-step reveal reveal-delay-2">
-        <div class="process-step-title">The Shoot</div>
-        <p class="process-step-desc">On the day, we guide and direct while keeping the atmosphere relaxed and authentic. Great images come from genuine moments.</p>
-      </div>
-      <div class="process-step reveal reveal-delay-3">
-        <div class="process-step-title">Delivery</div>
-        <p class="process-step-desc">Carefully retouched images delivered via a private gallery within 2–3 weeks. Print-ready files included with every package.</p>
-      </div>
+      @endforeach
     </div>
   </div>
 </section>
@@ -378,12 +368,16 @@
 ════════════════════════════════════════════ -->
 <div class="parallax-banner">
   <div class="parallax-bg parallax-bg--subtle"
-       style="background-image: url('https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=1800&q=80');"
+       style="background-image: url('{{ $pageSettings->parallax3_image_url ?: 'https://images.unsplash.com/photo-1509048191080-d2984bad6ae5?w=1800&q=80' }}');"
        data-parallax-speed="0.45"></div>
   <div class="parallax-banner-content">
-    <h2 class="parallax-banner-title reveal">Ready to Create<br/>Something <em>Beautiful?</em></h2>
-    <p class="parallax-banner-body reveal">Whether it's a once-in-a-lifetime wedding, a brand campaign, or simply capturing who you are right now — let's talk.</p>
-    <a href="#contact" class="btn-primary reveal">Start a Conversation</a>
+    <h2 class="parallax-banner-title reveal">{!! nl2br(e($pageSettings->parallax3_title)) !!}</h2>
+    @if($pageSettings->parallax3_body)
+    <p class="parallax-banner-body reveal">{{ $pageSettings->parallax3_body }}</p>
+    @endif
+    @if($pageSettings->parallax3_cta)
+    <a href="#contact" class="btn-primary reveal">{{ $pageSettings->parallax3_cta }}</a>
+    @endif
   </div>
 </div>
 
@@ -391,34 +385,43 @@
 <!-- ═══════════════════════════════════════════
      CONTACT — LIGHT section
 ════════════════════════════════════════════ -->
+@php $contactServices = $pageSettings->contact_services ?: ['Photography','Videography','Digital Marketing','Branding Consultancy','Content Production','Event Coverage']; @endphp
 <section id="contact" class="contact-section--light">
   <div class="contact-inner">
     <div class="contact-info">
-      <span class="section-tag reveal">Get in Touch</span>
-      <h2 class="section-title reveal" style="color: var(--light-heading);">Let's Create<br/><em>Something</em><br/>Beautiful</h2>
-      <p class="section-body reveal" style="color: var(--light-muted);">Ready to start your photography journey? Fill out the form and we'll get back to you within 24 hours to discuss your project.</p>
+      <span class="section-tag reveal">{{ $pageSettings->contact_tag }}</span>
+      <h2 class="section-title reveal" style="color: var(--light-heading);">{!! nl2br(e($pageSettings->contact_title)) !!}</h2>
+      @if($pageSettings->contact_description)
+      <p class="section-body reveal" style="color: var(--light-muted);">{{ $pageSettings->contact_description }}</p>
+      @endif
       <div class="contact-details">
+        @if($pageSettings->contact_email)
         <div class="contact-detail-item reveal">
           <div class="contact-detail-icon">✉</div>
           <div>
             <div class="contact-detail-label">Email</div>
-            <div class="contact-detail-value">keenkingsmedia@gmail.com</div>
+            <div class="contact-detail-value">{{ $pageSettings->contact_email }}</div>
           </div>
         </div>
+        @endif
+        @if($pageSettings->contact_phone)
         <div class="contact-detail-item reveal reveal-delay-1">
           <div class="contact-detail-icon">☎</div>
           <div>
             <div class="contact-detail-label">Phone</div>
-            <div class="contact-detail-value">[+260] 977 231 555</div>
+            <div class="contact-detail-value">{{ $pageSettings->contact_phone }}</div>
           </div>
         </div>
+        @endif
+        @if($pageSettings->contact_address)
         <div class="contact-detail-item reveal reveal-delay-2">
           <div class="contact-detail-icon">◎</div>
           <div>
             <div class="contact-detail-label">Studio</div>
-            <div class="contact-detail-value">Medoreen Business Park, Plot 36998, Alick Nkhata Road, Mass Media, Lusaka</div>
+            <div class="contact-detail-value">{{ $pageSettings->contact_address }}</div>
           </div>
         </div>
+        @endif
       </div>
     </div>
     <form class="contact-form reveal" action="{{ route('contact.send') }}" method="POST">
@@ -447,12 +450,9 @@
         <label>Service Interested In</label>
         <select name="service">
           <option value="">Select a service...</option>
-          <option>Photography</option>
-          <option>Videography</option>
-          <option>Digital Marketing</option>
-          <option>Branding Consultancy</option>
-          <option>Content Production</option>
-          <option>Event Coverage</option>
+          @foreach($contactServices as $svc)
+          <option {{ old('service') === $svc ? 'selected' : '' }}>{{ $svc }}</option>
+          @endforeach
         </select>
       </div>
       <div class="form-group">

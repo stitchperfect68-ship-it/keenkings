@@ -227,15 +227,15 @@
 
 <!-- Page hero -->
 <div class="page-hero">
-  <div class="page-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=80');"></div>
+  <div class="page-hero-bg" style="background-image:url('{{ $pageSettings->portfolio_page_image_url ?: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=80' }}');"></div>
   <div class="page-hero-content">
     <nav class="breadcrumb">
       <a href="{{ route('home') }}">Home</a>
       <span class="breadcrumb-sep">✦</span>
       <span class="breadcrumb-current" id="heroCrumb">Portfolio</span>
     </nav>
-    <span class="section-tag" id="heroTag">Our Work</span>
-    <h1 class="page-hero-title" id="heroTitle">The <em>Portfolio</em></h1>
+    <span class="section-tag" id="heroTag">{{ $pageSettings->portfolio_page_tag }}</span>
+    <h1 class="page-hero-title" id="heroTitle">{{ $pageSettings->portfolio_page_title }}</h1>
   </div>
 </div>
 

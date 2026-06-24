@@ -89,6 +89,12 @@
 
             <div class="nav-section">
                 <span class="nav-label">System</span>
+                <a href="{{ route('admin.page-content.index') }}" class="nav-item {{ request()->routeIs('admin.page-content.*') ? 'active' : '' }}">
+                    <i data-feather="layout"></i><span>Page Content</span>
+                </a>
+                <a href="{{ route('admin.footer.index') }}" class="nav-item {{ request()->routeIs('admin.footer.*') ? 'active' : '' }}">
+                    <i data-feather="minus-square"></i><span>Footer</span>
+                </a>
                 <a href="{{ route('admin.settings.index') }}" class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <i data-feather="settings"></i><span>Settings</span>
                 </a>

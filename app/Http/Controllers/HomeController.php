@@ -9,6 +9,9 @@ use App\Models\Service;
 use App\Models\Testimonial;
 use App\Models\PortfolioItem;
 use App\Models\Client;
+use App\Models\PageSetting;
+use App\Models\ProcessStep;
+use App\Models\SocialLink;
 
 class HomeController extends Controller
 {
@@ -76,7 +79,21 @@ class HomeController extends Controller
         // Clients grouped by row for the marquee
         $clientRows = Client::active()->get()->groupBy('row');
 
-        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows'));
+        $pageSettings = PageSetting::current();
+
+        $processSteps = ProcessStep::active()->get();
+        if ($processSteps->isEmpty()) {
+            $processSteps = collect([
+                (object)['title' => 'Discovery Call',    'description' => 'We start with a conversation. We learn about your vision, goals, and the story you want to tell. No commitment required.'],
+                (object)['title' => 'Creative Planning', 'description' => 'From location scouting to mood boards, we prepare every detail to ensure your shoot runs smoothly and looks stunning.'],
+                (object)['title' => 'The Shoot',         'description' => 'On the day, we guide and direct while keeping the atmosphere relaxed and authentic. Great images come from genuine moments.'],
+                (object)['title' => 'Delivery',          'description' => 'Carefully retouched images delivered via a private gallery within 2–3 weeks. Print-ready files included with every package.'],
+            ]);
+        }
+
+        $socialLinks = SocialLink::active()->get();
+
+        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks'));
     }
 
     public function about()   { return view('pages.about'); }

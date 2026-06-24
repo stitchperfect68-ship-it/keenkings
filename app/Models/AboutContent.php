@@ -9,9 +9,14 @@ class AboutContent extends Model
     protected $table    = 'about_content';
     protected $fillable = [
         'eyebrow','heading','lead_text','body_text',
+        'quote','skills',
         'main_image_url','main_image_path',
         'accent_image_url','accent_image_path',
         'founded_year','pillar_1','pillar_2','pillar_3',
+    ];
+
+    protected $casts = [
+        'skills' => 'array',
     ];
 
     public static function getSingleton(): self

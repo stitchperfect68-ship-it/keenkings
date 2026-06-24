@@ -24,6 +24,8 @@ class AboutController extends Controller
             'heading'          => 'required|string|max:300',
             'lead_text'        => 'required|string|max:1000',
             'body_text'        => 'required|string|max:2000',
+            'quote'            => 'nullable|string|max:500',
+            'skills'           => 'nullable|string',
             'main_image_url'   => 'nullable|url|max:500',
             'main_image_file'  => 'nullable|image|max:8192',
             'accent_image_url' => 'nullable|url|max:500',
@@ -33,6 +35,13 @@ class AboutController extends Controller
             'pillar_2'         => 'required|string|max:50',
             'pillar_3'         => 'required|string|max:50',
         ]);
+
+        // Parse skills textarea (one per line) into array
+        if (isset($data['skills'])) {
+            $data['skills'] = array_values(array_filter(
+                array_map('trim', explode("\n", $data['skills']))
+            ));
+        }
 
         $about = AboutContent::getSingleton();
 
