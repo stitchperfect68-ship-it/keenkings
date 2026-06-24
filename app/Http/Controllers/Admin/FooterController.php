@@ -11,8 +11,12 @@ class FooterController extends Controller
 {
     public function index()
     {
-        $settings    = PageSetting::current();
-        $socialLinks = SocialLink::orderBy('sort_order')->get();
+        $settings = PageSetting::current();
+        try {
+            $socialLinks = SocialLink::orderBy('sort_order')->get();
+        } catch (\Exception $e) {
+            $socialLinks = collect();
+        }
         return view('admin.pages.footer', compact('settings', 'socialLinks'));
     }
 

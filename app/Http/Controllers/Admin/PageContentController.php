@@ -12,8 +12,12 @@ class PageContentController extends Controller
 {
     public function index()
     {
-        $settings     = PageSetting::current();
-        $processSteps = ProcessStep::orderBy('sort_order')->get();
+        $settings = PageSetting::current();
+        try {
+            $processSteps = ProcessStep::orderBy('sort_order')->get();
+        } catch (\Exception $e) {
+            $processSteps = collect();
+        }
         return view('admin.pages.page-content', compact('settings', 'processSteps'));
     }
 
