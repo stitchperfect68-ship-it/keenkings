@@ -81,7 +81,11 @@ class HomeController extends Controller
 
         $pageSettings = PageSetting::current();
 
-        $processSteps = ProcessStep::active()->get();
+        try {
+            $processSteps = ProcessStep::active()->get();
+        } catch (\Exception $e) {
+            $processSteps = collect();
+        }
         if ($processSteps->isEmpty()) {
             $processSteps = collect([
                 (object)['title' => 'Discovery Call',    'description' => 'We start with a conversation. We learn about your vision, goals, and the story you want to tell. No commitment required.'],
@@ -91,7 +95,11 @@ class HomeController extends Controller
             ]);
         }
 
-        $socialLinks = SocialLink::active()->get();
+        try {
+            $socialLinks = SocialLink::active()->get();
+        } catch (\Exception $e) {
+            $socialLinks = collect();
+        }
 
         return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks'));
     }
