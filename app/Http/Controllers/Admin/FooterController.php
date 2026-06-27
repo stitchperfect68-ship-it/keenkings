@@ -36,13 +36,15 @@ class FooterController extends Controller
     {
         $request->validate([
             'platform' => 'required|string|max:50',
+            'icon'     => 'nullable|string|max:50',
             'label'    => 'required|string|max:100',
-            'url'      => 'required|url|max:500',
+            'url'      => 'required|string|max:500',
         ]);
 
         $max = SocialLink::max('sort_order') ?? 0;
         SocialLink::create([
             'platform'   => $request->platform,
+            'icon'       => $request->icon,
             'label'      => $request->label,
             'url'        => $request->url,
             'sort_order' => $max + 1,
@@ -56,13 +58,15 @@ class FooterController extends Controller
     {
         $request->validate([
             'platform'  => 'required|string|max:50',
+            'icon'      => 'nullable|string|max:50',
             'label'     => 'required|string|max:100',
-            'url'       => 'required|url|max:500',
+            'url'       => 'required|string|max:500',
             'is_active' => 'nullable|boolean',
         ]);
 
         $link->update([
             'platform'  => $request->platform,
+            'icon'      => $request->icon,
             'label'     => $request->label,
             'url'       => $request->url,
             'is_active' => $request->boolean('is_active'),

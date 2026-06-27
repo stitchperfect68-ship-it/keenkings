@@ -43,6 +43,7 @@
 <style>{!! $fontCss !!}</style>
 @endif
 <link rel="stylesheet" href="{{ asset('css/zoomin.css') }}"/>
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js" defer></script>
 @stack('head')
 </head>
 <body>
@@ -96,7 +97,13 @@
       @if($footerSocial->isNotEmpty())
       <div class="social-links">
         @foreach($footerSocial as $link)
-        <a href="{{ $link->url }}" class="social-link" target="_blank" rel="noopener noreferrer">{{ $link->platform }}</a>
+        <a href="{{ $link->url }}" class="social-link" target="_blank" rel="noopener noreferrer" title="{{ $link->label }}">
+          @if($link->icon)
+          <i data-feather="{{ $link->icon }}" style="width:16px;height:16px;vertical-align:middle;"></i>
+          @else
+          {{ $link->platform }}
+          @endif
+        </a>
         @endforeach
       </div>
       @endif
@@ -146,6 +153,7 @@
 </footer>
 
 <script src="{{ asset('js/zoomin.js') }}"></script>
+<script>if(window.feather)feather.replace();</script>
 @stack('scripts')
 </body>
 </html>

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialLink extends Model
 {
-    protected $fillable = ['platform', 'label', 'url', 'sort_order', 'is_active'];
+    protected $fillable = ['platform', 'icon', 'label', 'url', 'sort_order', 'is_active'];
 
     protected $casts = ['is_active' => 'boolean'];
 
