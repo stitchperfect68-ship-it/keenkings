@@ -32,8 +32,8 @@ class ClientController extends Controller
     {
         $data = $request->validate([
             'name'        => 'required|string|max:100',
-            'logo_url'    => 'nullable|url|max:500',
-            'website_url' => 'nullable|url|max:500',
+            'logo_url'    => 'nullable|string|max:500',
+            'website_url' => 'nullable|string|max:500',
             'row'         => 'required|integer|between:1,3',
             'sort_order'  => 'nullable|integer',
             'is_active'   => 'nullable|boolean',
@@ -57,8 +57,8 @@ class ClientController extends Controller
     {
         $data = $request->validate([
             'name'        => 'required|string|max:100',
-            'logo_url'    => 'nullable|url|max:500',
-            'website_url' => 'nullable|url|max:500',
+            'logo_url'    => 'nullable|string|max:500',
+            'website_url' => 'nullable|string|max:500',
             'row'         => 'required|integer|between:1,3',
             'sort_order'  => 'nullable|integer',
             'is_active'   => 'nullable|boolean',

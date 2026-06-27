@@ -25,7 +25,7 @@ class TestimonialsController extends Controller
             'quote'      => 'required|string|max:600',
             'name'       => 'required|string|max:150',
             'role'       => 'required|string|max:150',
-            'avatar_url' => 'nullable|url|max:500',
+            'avatar_url' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer',
             'is_active'  => 'nullable|boolean',
         ]);
@@ -46,7 +46,7 @@ class TestimonialsController extends Controller
             'quote'      => 'required|string|max:600',
             'name'       => 'required|string|max:150',
             'role'       => 'required|string|max:150',
-            'avatar_url' => 'nullable|url|max:500',
+            'avatar_url' => 'nullable|string|max:500',
             'sort_order' => 'nullable|integer',
             'is_active'  => 'nullable|boolean',
         ]);

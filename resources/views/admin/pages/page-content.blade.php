@@ -10,6 +10,20 @@
     </div>
 </div>
 
+@if ($errors->any())
+<div class="alert alert-error" style="margin-bottom:20px;">
+    <i data-feather="alert-circle"></i>
+    <div>
+        <strong>Save failed — please fix the following:</strong>
+        <ul style="margin:6px 0 0 16px; padding:0;">
+            @foreach ($errors->all() as $error)
+            <li style="font-size:13px;">{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endif
+
 <div class="tabs-nav" id="pageTabs">
     <button class="tab-btn active" data-tab="home-hero">Home Hero</button>
     <button class="tab-btn" data-tab="home-sections">Home Sections</button>
@@ -177,7 +191,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="parallax1_image_url" value="{{ old('parallax1_image_url', $settings->parallax1_image_url) }}" placeholder="https://...">
+                    <input type="text" name="parallax1_image_url" value="{{ old('parallax1_image_url', $settings->parallax1_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>
@@ -206,7 +220,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="parallax2_image_url" value="{{ old('parallax2_image_url', $settings->parallax2_image_url) }}" placeholder="https://...">
+                    <input type="text" name="parallax2_image_url" value="{{ old('parallax2_image_url', $settings->parallax2_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>
@@ -237,7 +251,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="parallax3_image_url" value="{{ old('parallax3_image_url', $settings->parallax3_image_url) }}" placeholder="https://...">
+                    <input type="text" name="parallax3_image_url" value="{{ old('parallax3_image_url', $settings->parallax3_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>
@@ -276,7 +290,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" name="contact_email" value="{{ old('contact_email', $settings->contact_email) }}" maxlength="200">
+                    <input type="text" name="contact_email" value="{{ old('contact_email', $settings->contact_email) }}" maxlength="200">
                 </div>
                 <div class="form-group">
                     <label>Phone Number</label>
@@ -360,7 +374,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="portfolio_page_image_url" value="{{ old('portfolio_page_image_url', $settings->portfolio_page_image_url) }}" placeholder="https://...">
+                    <input type="text" name="portfolio_page_image_url" value="{{ old('portfolio_page_image_url', $settings->portfolio_page_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>
@@ -392,7 +406,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="blog_page_image_url" value="{{ old('blog_page_image_url', $settings->blog_page_image_url) }}" placeholder="https://...">
+                    <input type="text" name="blog_page_image_url" value="{{ old('blog_page_image_url', $settings->blog_page_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>

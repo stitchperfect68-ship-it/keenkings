@@ -116,7 +116,7 @@
                     </div>
                     <div class="form-group">
                         <label>Or Image URL *</label>
-                        <input type="url" name="image_url" value="{{ old('image_url', $item->image_url ?? '') }}"
+                        <input type="text" name="image_url" value="{{ old('image_url', $item->image_url ?? '') }}"
                                placeholder="https://..." oninput="previewUrl(this)">
                         @error('image_url')<span class="form-error">{{ $message }}</span>@enderror
                     </div>

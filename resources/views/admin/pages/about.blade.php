@@ -82,7 +82,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="main_image_url" value="{{ old('main_image_url', $about->main_image_url) }}" placeholder="https://...">
+                    <input type="text" name="main_image_url" value="{{ old('main_image_url', $about->main_image_url) }}" placeholder="https://...">
                 </div>
             </div>
 
@@ -97,7 +97,7 @@
                 </div>
                 <div class="form-group">
                     <label>Or Image URL</label>
-                    <input type="url" name="accent_image_url" value="{{ old('accent_image_url', $about->accent_image_url) }}" placeholder="https://...">
+                    <input type="text" name="accent_image_url" value="{{ old('accent_image_url', $about->accent_image_url) }}" placeholder="https://...">
                 </div>
             </div>
         </div>

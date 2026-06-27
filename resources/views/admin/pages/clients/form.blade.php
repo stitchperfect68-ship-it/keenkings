@@ -32,7 +32,7 @@
 
             <div class="form-group">
                 <label>Website URL <small style="opacity:.5">(optional, makes logo a link)</small></label>
-                <input type="url" name="website_url"
+                <input type="text" name="website_url"
                        value="{{ old('website_url', $client->website_url ?? '') }}"
                        placeholder="https://example.com">
                 @error('website_url')<span class="form-error">{{ $message }}</span>@enderror
@@ -85,7 +85,7 @@
 
             <div class="form-group mt">
                 <label>Logo URL</label>
-                <input type="url" name="logo_url"
+                <input type="text" name="logo_url"
                        value="{{ old('logo_url', $client->logo_url ?? '') }}"
                        placeholder="https://..."
                        oninput="previewLogo(this)">
