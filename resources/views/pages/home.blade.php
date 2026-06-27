@@ -104,26 +104,25 @@
   max-width: 300px;
   letter-spacing: .01em;
 }
-/* Mobile — push hero content to top, strip stays at bottom */
+/* Mobile — column flex so strip sits directly below the buttons */
 @media (max-width: 600px) {
-  .hero { align-items: flex-start !important; }
+  .hero {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+  }
   .hero-content { padding: 84px 20px 20px !important; }
   .hero-activity {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
     display: flex;
-    bottom: 24px;
-    left: 16px;
-    right: 16px;
-  }
-  .hero-activity-rail {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .hero-activity-item { max-width: 100%; }
-  .hero-activity-div {
+    margin: 0 16px;
     width: auto;
-    height: 1px;
-    margin: 3px 8px;
   }
+  .hero-activity-rail { align-items: stretch; }
+  .hero-activity-item { max-width: 100%; }
   .hero-activity-name { max-width: none; }
 }
 </style>
