@@ -135,8 +135,8 @@ ul  { list-style: none; }
 }
 .hero-title em { font-style: italic; color: var(--accent); }
 .hero-desc {
-  font-size: 14px; font-weight: 300; line-height: 1.8;
-  color: var(--muted-dark); max-width: 440px; margin-bottom: 40px;
+  font-size: 17px; font-weight: 300; line-height: 1.8;
+  color: rgba(255,255,255,0.92); max-width: 440px; margin-bottom: 40px;
   opacity: 0; transform: translateY(20px);
   animation: fadeUp .8s var(--ease) .7s forwards;
 }
