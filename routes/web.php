@@ -61,9 +61,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('enquiries', Admin\EnquiriesController::class)->only(['index','show','destroy']);
         Route::patch('enquiries/{enquiry}/status', [Admin\EnquiriesController::class, 'updateStatus'])->name('enquiries.status');
 
-        // Settings (fonts)
-        Route::get('settings',  [Admin\SettingsController::class, 'index'])->name('settings.index');
-        Route::put('settings',  [Admin\SettingsController::class, 'update'])->name('settings.update');
+        // Settings (fonts + logo)
+        Route::get('settings',       [Admin\SettingsController::class, 'index'])->name('settings.index');
+        Route::put('settings',       [Admin\SettingsController::class, 'update'])->name('settings.update');
+        Route::post('settings/logo', [Admin\SettingsController::class, 'updateLogo'])->name('settings.logo');
 
         // Page Content
         Route::get('page-content',  [Admin\PageContentController::class, 'index'])->name('page-content.index');

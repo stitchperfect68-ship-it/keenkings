@@ -60,4 +60,26 @@ class SettingsController extends Controller
 
         return back()->with('success', 'Font settings updated successfully.');
     }
+
+    public function updateLogo(Request $request)
+    {
+        $request->validate([
+            'logo_file' => 'nullable|file|mimes:png,jpg,jpeg,svg,webp|max:2048',
+        ]);
+
+        $settings = SiteSetting::current();
+
+        if ($request->hasFile('logo_file')) {
+            if ($settings->logo_path) {
+                Storage::disk('public')->delete($settings->logo_path);
+            }
+            $path = $request->file('logo_file')->store('logo', 'public');
+            $settings->update([
+                'logo_path' => $path,
+                'logo_url'  => asset('storage/' . $path),
+            ]);
+        }
+
+        return back()->with('success', 'Logo updated successfully.');
+    }
 }

@@ -8,6 +8,8 @@ class SiteSetting extends Model
 {
     protected $fillable = [
         'font_preset',
+        'logo_path',
+        'logo_url',
         'heading_font',
         'body_font',
         'custom_serif_name',

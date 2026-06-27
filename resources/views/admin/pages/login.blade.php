@@ -9,6 +9,7 @@
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
+@php $loginLogo = \App\Models\SiteSetting::current()->logo_url ?? asset('images/KEEN-KINGS-LOGO WHITE.png'); @endphp
 <body class="admin-login-page">
 
 <div class="login-split">
@@ -17,7 +18,7 @@
         <div class="login-visual-overlay"></div>
         <div class="login-visual-content">
             <div class="login-logo">
-                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:52px;width:auto;display:block;margin-bottom:1rem;">
+                <img src="{{ $loginLogo }}" alt="Keen Kings Media" style="height:52px;width:auto;display:block;margin-bottom:1rem;">
             </div>
             <p class="login-tagline">Admin Panel<br><em>Manage Your Story</em></p>
         </div>
@@ -26,7 +27,7 @@
     <div class="login-form-side">
         <div class="login-form-wrap">
             <div style="margin-bottom:2rem;">
-                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:44px;width:auto;display:block;">
+                <img src="{{ $loginLogo }}" alt="Keen Kings Media" style="height:44px;width:auto;display:block;">
             </div>
             <div class="login-form-header">
                 <h1>Welcome Back</h1>

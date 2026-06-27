@@ -254,6 +254,37 @@
         </button>
     </div>
 </form>
+
+{{-- ── Logo Upload ── --}}
+<div class="form-card" style="margin-top:32px;">
+    <h3 class="form-section-title"><i data-feather="image"></i> Site Logo</h3>
+    <p style="font-size:13px;opacity:.6;margin-bottom:20px;">Upload a new logo. PNG or SVG with transparent background recommended. It will replace the logo in the navigation, footer, and admin sidebar.</p>
+
+    @if($settings->logo_url)
+    <div style="margin-bottom:20px; padding:20px; background:rgba(0,0,0,0.3); border-radius:10px; display:inline-flex; align-items:center; gap:16px;">
+        <img src="{{ $settings->logo_url }}" alt="Current Logo" style="height:48px; width:auto; display:block;">
+        <span style="font-size:12px; opacity:.5;">Current logo</span>
+    </div>
+    @else
+    <div style="margin-bottom:20px; padding:20px; background:rgba(0,0,0,0.3); border-radius:10px; display:inline-flex; align-items:center; gap:16px;">
+        <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Default Logo" style="height:48px; width:auto; display:block;">
+        <span style="font-size:12px; opacity:.5;">Default logo (no custom logo set)</span>
+    </div>
+    @endif
+
+    <form method="POST" action="{{ route('admin.settings.logo') }}" enctype="multipart/form-data" class="admin-form">
+        @csrf
+        <div class="form-row" style="align-items:flex-end;">
+            <div class="form-group" style="flex:1;">
+                <label>Upload New Logo <small style="opacity:.6;">(PNG, JPG, SVG, WebP — max 2 MB)</small></label>
+                <input type="file" name="logo_file" accept=".png,.jpg,.jpeg,.svg,.webp" required>
+            </div>
+            <div class="form-group" style="flex:0;">
+                <button type="submit" class="btn btn-primary"><i data-feather="upload"></i> Upload Logo</button>
+            </div>
+        </div>
+    </form>
+</div>
 @endsection
 
 @push('scripts')

@@ -15,11 +15,12 @@
 <body class="admin-body">
 
 <div class="admin-shell">
+    @php $adminLogoUrl = \App\Models\SiteSetting::current()->logo_url ?? null; @endphp
     <!-- Sidebar -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
             <a href="{{ route('admin.dashboard') }}" class="sidebar-logo">
-                <img src="{{ asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:28px;width:auto;display:block;">
+                <img src="{{ $adminLogoUrl ?? asset('images/KEEN-KINGS-LOGO WHITE.png') }}" alt="Keen Kings Media" style="height:28px;width:auto;display:block;">
                 <small>ADMIN</small>
             </a>
             <button class="sidebar-collapse" id="sidebarCollapse"><i data-feather="chevrons-left"></i></button>
