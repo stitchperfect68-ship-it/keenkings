@@ -310,6 +310,18 @@
             </div>
         </div>
 
+        <div class="form-card">
+            <h3 class="form-section-title"><i data-feather="anchor"></i> Footer Content</h3>
+            <div class="form-group">
+                <label>Footer Tagline / Description</label>
+                <textarea name="footer_description" rows="3">{{ old('footer_description', $settings->footer_description) }}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Copyright Text <small style="font-size:11px;opacity:.6;">(the © symbol is added automatically)</small></label>
+                <input type="text" name="footer_copyright" value="{{ old('footer_copyright', $settings->footer_copyright) }}" maxlength="200">
+            </div>
+        </div>
+
         <div class="form-actions">
             <button type="submit" class="btn btn-primary"><i data-feather="save"></i> Save Contact Content</button>
         </div>

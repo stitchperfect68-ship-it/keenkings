@@ -45,7 +45,7 @@ class PageSetting extends Model
         'contact_services' => 'array',
     ];
 
-    private static function defaults(): array
+    public static function getDefaults(): array
     {
         return [
             'hero_tag'                 => 'Media Production Studio',
@@ -96,11 +96,11 @@ class PageSetting extends Model
     public static function current(): self
     {
         try {
-            return static::first() ?? static::create(static::defaults());
+            return static::first() ?? static::create(static::getDefaults());
         } catch (\Exception $e) {
             // Table not yet migrated — return in-memory defaults so the site stays up
             $instance = new static();
-            $instance->forceFill(static::defaults());
+            $instance->forceFill(static::getDefaults());
             return $instance;
         }
     }

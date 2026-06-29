@@ -28,33 +28,33 @@ class PageContentController extends Controller
             'portfolio_section_title' => 'nullable|string|max:200',
             'parallax1_tag'   => 'nullable|string|max:100',
             'parallax1_title' => 'nullable|string|max:200',
-            'parallax1_body'  => 'nullable|string|max:1000',
+            'parallax1_body'  => 'nullable|string',
             'parallax1_cta'   => 'nullable|string|max:100',
             'parallax1_image_url'  => 'nullable|string|max:500',
             'parallax1_image_file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:5120',
             'services_tag'         => 'nullable|string|max:100',
             'services_title'       => 'nullable|string|max:200',
-            'services_description' => 'nullable|string|max:500',
+            'services_description' => 'nullable|string',
             'clients_tag'   => 'nullable|string|max:100',
             'clients_title' => 'nullable|string|max:200',
             'parallax2_tag'   => 'nullable|string|max:100',
             'parallax2_title' => 'nullable|string|max:200',
-            'parallax2_body'  => 'nullable|string|max:1000',
+            'parallax2_body'  => 'nullable|string',
             'parallax2_image_url'  => 'nullable|string|max:500',
             'parallax2_image_file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:5120',
             'process_tag'   => 'nullable|string|max:100',
             'process_title' => 'nullable|string|max:200',
             'parallax3_title' => 'nullable|string|max:200',
-            'parallax3_body'  => 'nullable|string|max:1000',
+            'parallax3_body'  => 'nullable|string',
             'parallax3_cta'   => 'nullable|string|max:100',
             'parallax3_image_url'  => 'nullable|string|max:500',
             'parallax3_image_file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:5120',
             'contact_tag'         => 'nullable|string|max:100',
             'contact_title'       => 'nullable|string|max:200',
-            'contact_description' => 'nullable|string|max:500',
+            'contact_description' => 'nullable|string',
             'contact_email'       => 'nullable|string|max:200',
             'contact_phone'       => 'nullable|string|max:100',
-            'contact_address'     => 'nullable|string|max:500',
+            'contact_address'     => 'nullable|string',
             'contact_services'    => 'nullable|string',
             'portfolio_page_tag'       => 'nullable|string|max:100',
             'portfolio_page_title'     => 'nullable|string|max:200',
@@ -63,15 +63,23 @@ class PageContentController extends Controller
             'blog_page_title'     => 'nullable|string|max:200',
             'blog_page_image_url'  => 'nullable|string|max:500',
             'blog_page_image_file' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:5120',
+            'footer_description' => 'nullable|string',
+            'footer_copyright'   => 'nullable|string|max:200',
         ]);
 
-        $settings = PageSetting::current();
-        $data = $request->except(['_token', '_method',
+        // Get or create the settings row — ensures it's DB-backed even on first deploy
+        try {
+            $settings = PageSetting::first() ?? PageSetting::create(PageSetting::getDefaults());
+        } catch (\Exception $e) {
+            return back()->with('error', 'Database error — the page_settings table may not exist yet. Run migrations on your server. (' . $e->getMessage() . ')');
+        }
+
+        $data = $request->except(['_token', '_method', '_tab',
             'parallax1_image_file', 'parallax2_image_file', 'parallax3_image_file',
             'portfolio_page_image_file', 'blog_page_image_file',
         ]);
 
-        // Parse textarea-based JSON fields (one per line)
+        // Parse textarea-based list fields (one item per line → array)
         if (isset($data['ticker_items'])) {
             $data['ticker_items'] = array_values(array_filter(
                 array_map('trim', explode("\n", $data['ticker_items']))
@@ -98,7 +106,11 @@ class PageContentController extends Controller
             }
         }
 
-        $settings->update($data);
+        try {
+            $settings->update($data);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Save failed: ' . $e->getMessage());
+        }
 
         return back()->with('success', 'Page content updated successfully.');
     }

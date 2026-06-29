@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\AdminUser;
 use App\Models\HeroSlide;
 use App\Models\AboutContent;
+use App\Models\PageSetting;
 use App\Models\Stat;
 use App\Models\Service;
 use App\Models\Testimonial;
@@ -116,6 +117,11 @@ class DatabaseSeeder extends Seeder
             ['parent_category' => 'graphics', 'sub_category' => 'brochure', 'title' => 'Corporate Layout',  'size' => 'tall',    'image_url' => 'https://i.ibb.co/C5ZP92ch/gd.jpg', 'sort_order' => 27],
         ];
         foreach ($items as $item) PortfolioItem::create($item + ['is_active' => true]);
+
+        // ── Page Settings (singleton row) ──
+        if (!PageSetting::exists()) {
+            PageSetting::create(PageSetting::getDefaults());
+        }
 
         // ── Clients ──
         $this->call(ClientSeeder::class);
