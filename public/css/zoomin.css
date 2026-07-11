@@ -1186,123 +1186,129 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
    OUR TEAM SECTION
 ════════════════════════════════════════════ */
 #team {
-  background: #fff;
+  background: #ffffff !important;
+  padding: 100px 40px;
 }
 .team-section {
-  max-width: var(--max-content);
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 120px 40px;
 }
+
+/* Header */
 .team-header {
   text-align: center;
-  margin-bottom: 72px;
+  margin-bottom: 64px;
 }
 .team-header .section-tag {
   display: block;
   margin-bottom: 14px;
   font-size: 11px;
+  font-weight: 500;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: #89dddf;
 }
 .team-header .section-title {
-  color: #000;
-  font-size: clamp(36px, 5vw, 60px);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.1;
 }
 .team-header .section-title em {
   font-style: italic;
-  color: var(--accent);
+  color: #89dddf;
 }
 
-/* ── grid: 3 columns desktop, 1 column mobile ── */
+/* ── 3-column flexbox row — never collapses on desktop ── */
 .team-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 28px;
 }
-
-/* ── Card — dark surface that pops against white section ── */
 .team-card {
-  position: relative;
-  min-width: 0;
-  background: #0d0d0d;
-  border-top: 3px solid var(--accent);
-  overflow: hidden;
+  flex: 0 0 calc(33.333% - 19px);
+  max-width: calc(33.333% - 19px);
   display: flex;
   flex-direction: column;
-  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+  border-top: 4px solid #89dddf;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
 .team-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 30px 70px rgba(0,0,0,.18), 0 6px 20px rgba(137,221,223,.12);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(137,221,223,0.15);
 }
 
-/* ── Photo area ── */
+/* Photo */
 .team-photo-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  padding-top: 125%; /* 4:5 portrait ratio */
   overflow: hidden;
-  background: #1a1a1a;
+  background: #1c1c1c;
 }
 .team-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform .55s var(--ease);
+  transition: transform 0.55s ease;
 }
-.team-card:hover .team-photo { transform: scale(1.06); }
+.team-card:hover .team-photo { transform: scale(1.07); }
 .team-photo-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 58%);
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
   opacity: 0;
-  transition: opacity .38s;
+  transition: opacity 0.38s ease;
+  z-index: 1;
 }
 .team-card:hover .team-photo-overlay { opacity: 1; }
 .team-photo--placeholder {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 88px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
   font-weight: 300;
-  font-family: var(--font-serif);
-  color: rgba(137,221,223,.3);
-  background: #1a1a1a;
+  color: rgba(137,221,223,0.35);
+  background: #1c1c1c;
 }
-
-/* ── Number badge ── */
 .team-card-num {
   position: absolute;
   top: 14px;
   right: 14px;
-  font-family: var(--font-serif);
+  z-index: 2;
+  font-family: 'Cormorant Garamond', serif;
   font-size: 12px;
   letter-spacing: .14em;
-  color: rgba(255,255,255,.85);
-  background: rgba(0,0,0,.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.55);
   padding: 3px 10px;
   border-radius: 20px;
 }
 
-/* ── Card body ── */
+/* Card body */
 .team-info {
-  padding: 24px 26px 30px;
+  padding: 24px 24px 28px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 .team-name {
-  font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
   font-weight: 400;
-  color: #fff;
+  color: #ffffff;
   line-height: 1.2;
   margin: 0;
 }
@@ -1310,27 +1316,23 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
   font-size: 10px;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 500;
+  color: #89dddf;
+  font-weight: 600;
 }
 .team-bio {
   font-size: 13.5px;
   line-height: 1.75;
-  color: rgba(255,255,255,.42);
-  margin: 4px 0 0;
+  color: rgba(255,255,255,0.45);
+  margin: 6px 0 0;
 }
 
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .team-section { padding: 96px 28px; }
-  .team-grid { gap: 20px; }
-}
+/* ── Mobile: 1 column ── */
 @media (max-width: 768px) {
-  .team-section { padding: 72px 20px; }
-  .team-header { margin-bottom: 48px; }
-  .team-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
+  #team { padding: 72px 20px; }
+  .team-header { margin-bottom: 44px; }
+  .team-grid { gap: 20px; }
+  .team-card {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
-  .team-photo-wrap { aspect-ratio: 3 / 4; }
 }

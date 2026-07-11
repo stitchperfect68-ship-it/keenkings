@@ -299,7 +299,7 @@
     </div>
     <div class="team-grid">
       @foreach($teamMembers as $member)
-      <div class="team-card reveal{{ ($loop->index % 3) > 0 ? ' reveal-delay-'.($loop->index % 3) : '' }}">
+      <div class="team-card">
         <div class="team-photo-wrap">
           @if($member->image_url)
           <img src="{{ $member->image_url }}" alt="{{ $member->name }}" class="team-photo" loading="lazy">
