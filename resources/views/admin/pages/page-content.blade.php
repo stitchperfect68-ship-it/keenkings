@@ -67,10 +67,23 @@
         </div>
 
         <div class="form-card">
-            <h3 class="form-section-title"><i data-feather="refresh-cw"></i> Ticker Items <small style="font-size:11px;font-weight:400;opacity:.6;">(one per line)</small></h3>
-            <div class="form-group">
-                <textarea name="ticker_items" rows="10" placeholder="Portrait Photography&#10;Wedding Stories&#10;...">{{ old('ticker_items', is_array($settings->ticker_items) ? implode("\n", $settings->ticker_items) : '') }}</textarea>
+            <h3 class="form-section-title"><i data-feather="refresh-cw"></i> Ticker Items</h3>
+            <div id="ticker-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+                @foreach(old('ticker_items', $settings->ticker_items ?? []) as $item)
+                <div class="ticker-row" style="display:flex;gap:8px;align-items:center;">
+                    <input type="text" name="ticker_items[]" value="{{ $item }}"
+                           placeholder="e.g. Portrait Photography"
+                           style="flex:1;" maxlength="100">
+                    <button type="button" onclick="this.closest('.ticker-row').remove()"
+                            class="btn btn-danger btn-sm" title="Remove">
+                        <i data-feather="trash-2" style="width:14px;height:14px;"></i>
+                    </button>
+                </div>
+                @endforeach
             </div>
+            <button type="button" id="addTickerBtn" class="btn btn-ghost btn-sm">
+                <i data-feather="plus" style="width:14px;height:14px;"></i> Add Item
+            </button>
         </div>
 
         <div class="form-actions">
@@ -439,6 +452,23 @@ tabBtns.forEach(btn => {
         btn.classList.add('active');
         document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
     });
+});
+
+// ── Ticker CRUD ──
+document.getElementById('addTickerBtn').addEventListener('click', function () {
+    const row = document.createElement('div');
+    row.className = 'ticker-row';
+    row.style.cssText = 'display:flex;gap:8px;align-items:center;';
+    row.innerHTML = `
+        <input type="text" name="ticker_items[]" placeholder="e.g. Portrait Photography"
+               style="flex:1;" maxlength="100" autofocus>
+        <button type="button" onclick="this.closest('.ticker-row').remove()"
+                class="btn btn-danger btn-sm" title="Remove">
+            <i data-feather="trash-2" style="width:14px;height:14px;"></i>
+        </button>`;
+    document.getElementById('ticker-list').appendChild(row);
+    if (window.feather) feather.replace();
+    row.querySelector('input').focus();
 });
 </script>
 @endpush

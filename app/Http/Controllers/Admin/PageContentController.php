@@ -23,7 +23,8 @@ class PageContentController extends Controller
             'hero_description'   => 'nullable|string|max:1000',
             'hero_cta_primary'   => 'nullable|string|max:100',
             'hero_cta_secondary' => 'nullable|string|max:100',
-            'ticker_items'       => 'nullable|string',
+            'ticker_items'       => 'nullable|array',
+            'ticker_items.*'     => 'nullable|string|max:100',
             'portfolio_section_tag'   => 'nullable|string|max:100',
             'portfolio_section_title' => 'nullable|string|max:200',
             'parallax1_tag'   => 'nullable|string|max:100',
@@ -79,10 +80,10 @@ class PageContentController extends Controller
             'portfolio_page_image_file', 'blog_page_image_file',
         ]);
 
-        // Parse textarea-based list fields (one item per line → array)
-        if (isset($data['ticker_items'])) {
+        // Ticker items arrive as ticker_items[] array; strip blanks
+        if (isset($data['ticker_items']) && is_array($data['ticker_items'])) {
             $data['ticker_items'] = array_values(array_filter(
-                array_map('trim', explode("\n", $data['ticker_items']))
+                array_map('trim', $data['ticker_items'])
             ));
         }
         if (isset($data['contact_services'])) {
