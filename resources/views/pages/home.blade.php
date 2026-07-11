@@ -291,15 +291,15 @@
      OUR TEAM
 ════════════════════════════════════════════ -->
 @if($teamMembers->isNotEmpty())
-<section id="team" class="section--light">
+<section id="team">
   <div class="team-section">
     <div class="team-header reveal">
-      <span class="section-tag" style="display:block;margin-bottom:10px;">The People Behind the Lens</span>
-      <h2 class="section-title" style="color:var(--light-heading);">Meet Our Team</h2>
+      <span class="section-tag" style="display:block;margin-bottom:12px;">The People Behind the Lens</span>
+      <h2 class="section-title">Meet Our <em>Team</em></h2>
     </div>
     <div class="team-grid">
-      @foreach($teamMembers as $i => $member)
-      <div class="team-card reveal{{ $i % 3 > 0 ? ' reveal-delay-'.($i % 3) : '' }}">
+      @foreach($teamMembers as $member)
+      <div class="team-card reveal{{ ($loop->index % 3) > 0 ? ' reveal-delay-'.($loop->index % 3) : '' }}">
         <div class="team-photo-wrap">
           @if($member->image_url)
           <img src="{{ $member->image_url }}" alt="{{ $member->name }}" class="team-photo" loading="lazy">
@@ -308,6 +308,8 @@
             {{ strtoupper(substr($member->name, 0, 1)) }}
           </div>
           @endif
+          <div class="team-photo-overlay"></div>
+          <span class="team-card-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
         </div>
         <div class="team-info">
           <h3 class="team-name">{{ $member->name }}</h3>

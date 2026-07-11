@@ -21,14 +21,14 @@
             <img src="{{ $member->image_url }}" alt="{{ $member->name }}"
                  style="width:100%;height:100%;object-fit:cover;">
             @else
-            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--surface-2);font-size:20px;font-weight:600;color:var(--gold);">
+            <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--surface-2);font-size:20px;font-weight:600;color:var(--accent);">
                 {{ strtoupper(substr($member->name, 0, 1)) }}
             </div>
             @endif
         </div>
         <div class="list-card-body">
             <h4>{{ $member->name }}</h4>
-            <p style="color:var(--gold);font-size:12px;margin-bottom:4px;">{{ $member->role }}</p>
+            <p style="color:var(--accent);font-size:12px;margin-bottom:4px;">{{ $member->role }}</p>
             @if($member->bio)
             <p>{{ Str::limit($member->bio, 90) }}</p>
             @endif
