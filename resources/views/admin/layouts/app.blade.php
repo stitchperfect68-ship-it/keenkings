@@ -47,6 +47,11 @@
                 <a href="{{ route('admin.services.index') }}" class="nav-item {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
                     <i data-feather="briefcase"></i><span>Services</span>
                 </a>
+                <a href="{{ route('admin.team.index') }}" class="nav-item {{ request()->routeIs('admin.team.*') ? 'active' : '' }}">
+                    <i data-feather="users"></i><span>Our Team</span>
+                    @php try { $teamCount = \App\Models\TeamMember::count(); } catch (\Exception $e) { $teamCount = 0; } @endphp
+                    @if($teamCount > 0)<span class="nav-badge">{{ $teamCount }}</span>@endif
+                </a>
                 <a href="{{ route('admin.testimonials.index') }}" class="nav-item {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
                     <i data-feather="message-square"></i><span>Testimonials</span>
                 </a>

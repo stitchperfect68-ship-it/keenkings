@@ -13,6 +13,7 @@ use App\Models\PageSetting;
 use App\Models\ProcessStep;
 use App\Models\SocialLink;
 use App\Models\BlogPost;
+use App\Models\TeamMember;
 
 class HomeController extends Controller
 {
@@ -105,7 +106,13 @@ class HomeController extends Controller
         $latestPortfolio = PortfolioItem::where('is_active', true)->latest()->first();
         $latestBlog      = BlogPost::where('is_published', true)->latest('published_at')->first();
 
-        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks', 'latestPortfolio', 'latestBlog'));
+        try {
+            $teamMembers = TeamMember::active()->get();
+        } catch (\Exception $e) {
+            $teamMembers = collect();
+        }
+
+        return view('pages.home', compact('heroSlides', 'about', 'stats', 'services', 'testimonials', 'previewItems', 'clientRows', 'pageSettings', 'processSteps', 'socialLinks', 'latestPortfolio', 'latestBlog', 'teamMembers'));
     }
 
     public function about()   { return view('pages.about'); }

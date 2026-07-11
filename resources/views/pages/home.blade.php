@@ -288,6 +288,45 @@
 
 
 <!-- ═══════════════════════════════════════════
+     OUR TEAM
+════════════════════════════════════════════ -->
+@if($teamMembers->isNotEmpty())
+<section id="team" class="section--light">
+  <div class="team-section">
+    <div class="team-header reveal">
+      <span class="section-tag" style="display:block;margin-bottom:10px;">The People Behind the Lens</span>
+      <h2 class="section-title" style="color:var(--light-heading);">Meet Our Team</h2>
+    </div>
+    <div class="team-grid">
+      @foreach($teamMembers as $i => $member)
+      <div class="team-card reveal{{ $i % 3 > 0 ? ' reveal-delay-'.($i % 3) : '' }}">
+        <div class="team-photo-wrap">
+          @if($member->image_url)
+          <img src="{{ $member->image_url }}" alt="{{ $member->name }}" class="team-photo" loading="lazy">
+          @else
+          <div class="team-photo team-photo--placeholder">
+            {{ strtoupper(substr($member->name, 0, 1)) }}
+          </div>
+          @endif
+        </div>
+        <div class="team-info">
+          <h3 class="team-name">{{ $member->name }}</h3>
+          @if($member->role)
+          <span class="team-role">{{ $member->role }}</span>
+          @endif
+          @if($member->bio)
+          <p class="team-bio">{{ $member->bio }}</p>
+          @endif
+        </div>
+      </div>
+      @endforeach
+    </div>
+  </div>
+</section>
+@endif
+
+
+<!-- ═══════════════════════════════════════════
      PARALLAX BANNER 1
 ════════════════════════════════════════════ -->
 <div class="parallax-banner">

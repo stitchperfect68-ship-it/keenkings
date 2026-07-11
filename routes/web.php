@@ -41,6 +41,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Services
         Route::resource('services', Admin\ServicesController::class)->except(['show']);
 
+        // Team Members
+        Route::resource('team', Admin\TeamController::class)->except(['show']);
+
         // Testimonials
         Route::resource('testimonials', Admin\TestimonialsController::class)->except(['show']);
 
