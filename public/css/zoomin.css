@@ -1186,7 +1186,7 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
    OUR TEAM SECTION
 ════════════════════════════════════════════ */
 #team {
-  background: var(--black);
+  background: #fff;
 }
 .team-section {
   max-width: var(--max-content);
@@ -1198,58 +1198,52 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
   margin-bottom: 72px;
 }
 .team-header .section-tag {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 11px;
+  letter-spacing: .22em;
+  text-transform: uppercase;
   color: var(--accent);
 }
 .team-header .section-title {
-  color: var(--white);
+  color: #000;
   font-size: clamp(36px, 5vw, 60px);
 }
 .team-header .section-title em {
   font-style: italic;
   color: var(--accent);
 }
+
+/* ── grid: 3 columns desktop, 1 column mobile ── */
 .team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 28px;
 }
 
-/* Card shell */
+/* ── Card — dark surface that pops against white section ── */
 .team-card {
   position: relative;
-  background: rgba(255,255,255,.03);
-  border: 1px solid var(--border-dark);
+  min-width: 0;
+  background: #0d0d0d;
+  border-top: 3px solid var(--accent);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: border-color .35s var(--ease),
-              transform .35s var(--ease),
-              box-shadow .35s var(--ease);
-}
-.team-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 100%;
-  height: 2px;
-  background: var(--accent);
-  transition: right .45s var(--ease);
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
 }
 .team-card:hover {
-  border-color: rgba(137,221,223,.22);
-  transform: translateY(-8px);
-  box-shadow: 0 24px 64px rgba(0,0,0,.55);
+  transform: translateY(-10px);
+  box-shadow: 0 30px 70px rgba(0,0,0,.18), 0 6px 20px rgba(137,221,223,.12);
 }
-.team-card:hover::after { right: 0; }
 
-/* Photo */
+/* ── Photo area ── */
 .team-photo-wrap {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: rgba(255,255,255,.05);
+  background: #1a1a1a;
 }
 .team-photo {
   width: 100%;
@@ -1262,9 +1256,9 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
 .team-photo-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 55%);
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 58%);
   opacity: 0;
-  transition: opacity .35s;
+  transition: opacity .38s;
 }
 .team-card:hover .team-photo-overlay { opacity: 1; }
 .team-photo--placeholder {
@@ -1276,37 +1270,39 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
   font-size: 88px;
   font-weight: 300;
   font-family: var(--font-serif);
-  color: rgba(137,221,223,.25);
-  background: rgba(255,255,255,.04);
+  color: rgba(137,221,223,.3);
+  background: #1a1a1a;
 }
+
+/* ── Number badge ── */
 .team-card-num {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 14px;
+  right: 14px;
   font-family: var(--font-serif);
   font-size: 12px;
   letter-spacing: .14em;
-  color: rgba(255,255,255,.75);
-  background: rgba(0,0,0,.42);
+  color: rgba(255,255,255,.85);
+  background: rgba(0,0,0,.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   padding: 3px 10px;
   border-radius: 20px;
 }
 
-/* Card body */
+/* ── Card body ── */
 .team-info {
-  padding: 28px 28px 32px;
+  padding: 24px 26px 30px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 7px;
 }
 .team-name {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 400;
-  color: var(--white);
+  color: #fff;
   line-height: 1.2;
   margin: 0;
 }
@@ -1318,18 +1314,17 @@ footer { background: var(--black); border-top: 1px solid var(--border-dark); pad
   font-weight: 500;
 }
 .team-bio {
-  font-size: 14px;
+  font-size: 13.5px;
   line-height: 1.75;
-  color: rgba(255,255,255,.45);
+  color: rgba(255,255,255,.42);
   margin: 4px 0 0;
 }
 
-/* Responsive — tablet */
+/* ── Responsive ── */
 @media (max-width: 1024px) {
-  .team-section { padding: 100px 32px; }
+  .team-section { padding: 96px 28px; }
   .team-grid { gap: 20px; }
 }
-/* Responsive — mobile */
 @media (max-width: 768px) {
   .team-section { padding: 72px 20px; }
   .team-header { margin-bottom: 48px; }
