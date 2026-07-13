@@ -4,10 +4,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\OgImageController;
 use App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Route;
 
 /* ─── Public Routes ─── */
+Route::get('/og-image.png', [OgImageController::class, 'show'])->name('og.image');
 Route::get('/',          [HomeController::class, 'index'])->name('home');
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/about',     [HomeController::class, 'about'])->name('about');
