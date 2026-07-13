@@ -4,8 +4,24 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<title>@yield('title', 'Keenkings — Photography Portfolio')</title>
-<meta name="description" content="@yield('description', 'Keenkings Media is a dynamic media production studio based in Lusaka, Zambia. Est. 2016.')">
+<title>@yield('title', 'Keenkings Media — Photography, Film & Creative Production | Lusaka, Zambia')</title>
+<meta name="description" content="@yield('description', 'Keenkings Media is a Lusaka-based creative studio delivering world-class photography, videography, branding and digital content. We capture moments that move people.')">
+
+{{-- Open Graph / Social Sharing --}}
+@php $ogImage = asset('images/KEEN-KINGS-LOGO WHITE.png'); @endphp
+<meta property="og:type"        content="website">
+<meta property="og:site_name"   content="Keenkings Media">
+<meta property="og:title"       content="@yield('og_title', 'Keenkings Media — Creative Studio, Lusaka Zambia')">
+<meta property="og:description" content="@yield('og_description', 'Photography, film, branding and digital content production based in Lusaka, Zambia. Telling stories that move people.')">
+<meta property="og:image"       content="{{ $ogImage }}">
+<meta property="og:image:alt"   content="Keenkings Media Logo">
+<meta property="og:url"         content="{{ url()->current() }}">
+
+{{-- Twitter / X Card --}}
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="@yield('og_title', 'Keenkings Media — Creative Studio, Lusaka Zambia')">
+<meta name="twitter:description" content="@yield('og_description', 'Photography, film, branding and digital content production based in Lusaka, Zambia. Telling stories that move people.')">
+<meta name="twitter:image"       content="{{ $ogImage }}">
 @php
     try {
         $siteSetting = \App\Models\SiteSetting::current();
